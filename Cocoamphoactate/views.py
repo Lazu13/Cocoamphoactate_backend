@@ -1,13 +1,9 @@
-from django.shortcuts import get_object_or_404
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-from .models import User
-from .serializers import *
 from django.http import *
+from rest_framework import status
 from rest_framework.decorators import api_view
-from django.utils.six import BytesIO
-from rest_framework.parsers import JSONParser
+from rest_framework.response import Response
+
+from .serializers import *
 
 
 class UserApi:
@@ -96,8 +92,6 @@ class FriendsApi:
         if request.method == 'POST':
             serializer = FriendsSerializer(data=request.data)
             if serializer.is_valid():
-                UserApi.get_object(serializer.validated_data['user_one'].id)
-                UserApi.get_object(serializer.validated_data['user_two'].id)
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
