@@ -1,0 +1,57 @@
+#%RAML 1.0
+title: "Server-Api"
+baseUri: http://127.0.0.1:8000/
+version: v1
+/users:
+  get:
+    description: Retrieve list of all users
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              [
+                {
+                  "id": 4,
+                  "login": "testLogin3",
+                  "password": "testPassword3",
+                  "mail": "testMail3"
+                }
+              ]
+  post:
+    description: Add new user
+    body:
+      application/json:
+        example: |
+          {
+            "login" : "testLogin3",
+            "password" : "testPassword3",
+            "mail" : "testMail3"
+          }
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "id": 5,
+                "login": "testLogin3",
+                "password": "testPassword3",
+                "mail": "testMail3"
+              }
+/{pk}:
+  get:
+    description: Retrieve specific user identified by id
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "id": 4,
+                "login": "testLogin3",
+                "password": "testPassword3",
+                "mail": "testMail3"
+              }
+  put:
+  delete:
