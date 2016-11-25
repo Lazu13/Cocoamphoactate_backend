@@ -1,10 +1,5 @@
+from django.contrib.auth.models import User
 from django.db import models
-
-
-class User(models.Model):
-    login = models.CharField(max_length=20)
-    password = models.CharField(max_length=20)
-    mail = models.CharField(max_length=255)
 
 
 class Friends(models.Model):

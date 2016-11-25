@@ -1,5 +1,7 @@
 from django.conf.urls import url
 from django.contrib import admin
+
+from rest_framework.authtoken import views
 from Cocoamphoactate.controllers.UserController import UserController
 from Cocoamphoactate.controllers.GameController import GameController
 from Cocoamphoactate.controllers.FriendsController import FriendsController
@@ -10,6 +12,8 @@ from Cocoamphoactate.controllers.FavoritesController import FavoritesController
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^api-token-auth/', views.obtain_auth_token),
+    url(r'^users/login$', UserController.loginUser),
 
     url(r'^users$', UserController.get),
     url(r'^users/(?P<pk>[0-9]+)$', UserController.get_put_delete_user),
