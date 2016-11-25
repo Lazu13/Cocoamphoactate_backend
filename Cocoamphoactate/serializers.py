@@ -1,4 +1,5 @@
 from rest_framework import serializers
+
 from .models import *
 
 
@@ -18,6 +19,34 @@ class GameSerializer(serializers.ModelSerializer):
 
 # friends/
 class FriendsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Friends
+        fields = '__all__'
+
+
+# favorites/
+class FavoritesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Friends
+        fields = '__all__'
+
+
+# friends/pending/
+class FriendsPendingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Friends
+        fields = '__all__'
+
+
+# gamelib/
+class GameLibSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Friends
+        fields = '__all__'
+
+
+# reviews/
+class ReviewsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Friends
         fields = '__all__'
