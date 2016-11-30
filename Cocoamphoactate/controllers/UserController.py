@@ -1,4 +1,3 @@
-from django.http import *
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
@@ -11,7 +10,7 @@ from ..serializers import *
 
 class UserController:
     @api_view(['POST'])
-    def loginUser(request):
+    def login_user(request):
         if request.method == 'POST':
             serializer = LoginSerializer(data=request.data)
             print(serializer)
