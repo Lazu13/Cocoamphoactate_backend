@@ -13,11 +13,11 @@ from Cocoamphoactate.controllers.FavoritesController import FavoritesController
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api-token-auth/', views.obtain_auth_token),
-    url(r'^users/login$', UserController.loginUser),
+    url(r'^users/login$', UserController.login_user),
 
     url(r'^users$', UserController.get_users),
     url(r'^users/register$', UserController.register),
-    url(r'^user/$', UserController.get_put_delete_user),
+    url(r'^user$', UserController.get_put_delete_user),
 
     url(r'^games$', GameController.get),
     url(r'^games/(?P<pk>[0-9]+)$', GameController.get_put_delete_game),
