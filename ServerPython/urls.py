@@ -15,7 +15,8 @@ urlpatterns = [
     url(r'^api-token-auth/', views.obtain_auth_token),
     url(r'^users/login$', UserController.loginUser),
 
-    url(r'^users$', UserController.get),
+    url(r'^users$', UserController.get_users),
+    url(r'^users/register$', UserController.register),
     url(r'^users/(?P<pk>[0-9]+)$', UserController.get_put_delete_user),
 
     url(r'^games$', GameController.get),
