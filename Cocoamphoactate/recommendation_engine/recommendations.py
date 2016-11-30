@@ -6,8 +6,8 @@ from ..models import User, Game, GameLib, Friends
 
 __all__ = ['Engine', 'ALL_USERS', 'FRIENDS_ONLY']
 
-ALL_USERS = 1
-FRIENDS_ONLY = 2
+ALL_USERS = 0
+FRIENDS_ONLY = 1
 
 
 class Engine(object):
@@ -26,6 +26,10 @@ class Engine(object):
 
     @type.setter
     def type(self, rtype):
+        rtype = str(rtype)
+        print(rtype)
+        print(ALL_USERS)
+        print(rtype == ALL_USERS)
         if rtype not in [ALL_USERS, FRIENDS_ONLY]:
             raise ValueError("Not existing type of recommendation")
         self.__type = rtype
@@ -36,7 +40,7 @@ class Engine(object):
 
     @user.setter
     def user(self, user):
-        if user.id < 0:
+        if int(user) < 0:
             raise ValueError("Not possible userID")
         self.__user = user
 
