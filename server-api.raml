@@ -2,9 +2,23 @@
 title: "Server-Api"
 baseUri: http://127.0.0.1:8000/
 version: v1
+/api-token-auth:
+  post:
+    description: Get token - used only for testing purposes
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "token" : <GENERATED_TOKEN>
+              }
 /users:
   get:
     description: Retrieve list of all users
+    headers:
+      Authorization:
+        <GENERATED_TOKEN>
     responses:
       200:
         body:
@@ -18,15 +32,15 @@ version: v1
                   "mail": "testMail3"
                 }
               ]
+/users/login:
   post:
-    description: Add new user
+    description: Endpoint for logining - as response token is returned
     body:
       application/json:
         example: |
           {
-            "username" : "testLogin3",
-            "password" : "testPassword3",
-            "mail" : "testMail3"
+            "username" : "testUserName",
+            "password" : "testPassword"
           }
     responses:
       200:
@@ -34,24 +48,42 @@ version: v1
           application/json:
             example: |
               {
-                "id": 5,
-                "login": "testLogin3",
-                "password": "testPassword3",
-                "mail": "testMail3"
+                "token" : <GENERATED_TOKEN>
               }
-/{userId}:
+
+/users/register:
+  post:
+    description: Registering new user
+    body:
+      application/json:
+        example: |
+          {
+            "id" : 1
+            "username" : "testUsername",
+            "password" : "testPassword",
+            "email" : "testEmail"
+          }
+    responses:
+      200:
+
+/user:
   get:
-    description: Retrieve specific user identified by id
+    description: Retrieves given user by token authentication
+    headers:
+      Authorization:
+        <GENERATED_TOKEN>
     responses:
       200:
         body:
           application/json:
             example: |
               {
-                "id": 4,
-                "login": "testLogin3",
-                "password": "testPassword3",
-                "mail": "testMail3"
+                "id" : 1
+                "username" : "testUsername",
+                "password" : "testPassword",
+                "email" : "testEmail"
               }
   put:
+
   delete:
+
