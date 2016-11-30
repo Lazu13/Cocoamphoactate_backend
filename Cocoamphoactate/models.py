@@ -9,8 +9,8 @@ class Friends(models.Model):
 
 class Game(models.Model):
     title = models.CharField(max_length=255)
-    score = models.FloatField
-    description = models.CharField
+    score = models.FloatField(max_length=4)
+    description = models.CharField(max_length=1000)
     platform = models.CharField(max_length=20)
 
 
@@ -32,4 +32,4 @@ class FriendsPending(models.Model):
 class Reviews(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
-    review = models.CharField
+    review = models.CharField(max_length=1000)
