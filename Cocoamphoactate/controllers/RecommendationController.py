@@ -15,9 +15,12 @@ class RecommendationController():
     @authentication_classes((TokenAuthentication, ))
     def get(request, pk, t):
         engine = Engine()
-        engine.set_user(pk)
-        engine.set_type(t)
-        return Response({'detail': 'GET answer', 'user' : pk, 'type' : t})
+        try:
+            engine.set_user(pk)
+            engine.set_type(t)
+        except ValueError as e:
+            return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
+        return Response({'detail': 'GET answer', 'user' : pk, 'type' : t}, status=status.HTTP_200_OK)
 
 
     @api_view(['GET'])
