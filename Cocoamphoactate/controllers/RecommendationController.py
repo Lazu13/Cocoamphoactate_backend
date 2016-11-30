@@ -18,3 +18,11 @@ class RecommendationController():
         engine.set_user(pk)
         engine.set_type(t)
         return Response({'detail': 'GET answer', 'user' : pk, 'type' : t})
+
+
+    @api_view(['GET'])
+    @authentication_classes((TokenAuthentication,))
+    def get_most_popular(request):
+        engine = Engine()
+        games = engine.get_most_popular()
+        return Response(dict(games))

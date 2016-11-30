@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 # encoding utf-8
 
-from ..models import User, Game, GameLib, Friends
-
+from ..models import User, Game, GameLib, Friends, Score
 
 __all__ = ['Engine', 'ALL_USERS', 'FRIENDS_ONLY']
 
@@ -15,6 +14,7 @@ class Engine(object):
     Class used for getting recomendations for specified user.
     It may return either most popular items or items based on friends/all users' opinions and interests of the user.
     """
+
     def __init__(self):
         """Initializator for class Engine"""
         self.__type = ALL_USERS
@@ -26,10 +26,7 @@ class Engine(object):
 
     @type.setter
     def type(self, rtype):
-        rtype = str(rtype)
-        print(rtype)
-        print(ALL_USERS)
-        print(rtype == ALL_USERS)
+        rtype = int(rtype)
         if rtype not in [ALL_USERS, FRIENDS_ONLY]:
             raise ValueError("Not existing type of recommendation")
         self.__type = rtype
@@ -44,7 +41,7 @@ class Engine(object):
             raise ValueError("Not possible userID")
         self.__user = user
 
-    def set_type(self, rtype = ALL_USERS):
+    def set_type(self, rtype=ALL_USERS):
         """
         Setter used for setting type of recommendations
         :param type: int [ALL_USERS, FRIENDS_ONLY] - specifies on whom recommendations are based
@@ -61,9 +58,24 @@ class Engine(object):
     def get_most_popular(self):
         """
         Method used for getting recommendations of most popular items
-        :return:
+        :return: list of game objects
         """
-        pass
+        import operator
+        from django.db.models import Sum, Avg
+        # Entry.objects.exclude(pub_date__gt=datetime.date(2005, 1, 3), headline='Hello')
+        games = Game.objects.all()
+        grd = {}
+        for game in games:
+            scores = list(Score.objects.values('game_id').filter(game_id=game.id).annotate(Avg('score')))
+            idn = scores[0]['game_id']
+            avg = scores[0]['score__avg']
+            grd.update({idn: avg})
+        print(grd)
+
+        sorted_grd = sorted(grd.items(), key=operator.itemgetter(1), reverse=True)
+        sorted_grd = sorted_grd[:2]
+        print(sorted_grd)
+        return sorted_grd
 
     def get_best_matching(self):
         """
