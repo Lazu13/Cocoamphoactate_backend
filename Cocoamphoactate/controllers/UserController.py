@@ -5,6 +5,7 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 from rest_framework.exceptions import ParseError
 from rest_framework.response import Response
 
+from Cocoamphoactate.controllers.ControllerUtils import Utils
 from ..serializers import *
 
 
@@ -52,8 +53,12 @@ class UserController:
         return Response(status=status.HTTP_200_OK)
 
     @api_view(['GET', 'DELETE', 'PUT'])
-    def get_put_delete_user(request, pk):
-        user = UserController.get_object(pk)
+    @authentication_classes((TokenAuthentication,))
+    def get_put_delete_user(request):
+        try:
+            user = Utils.get_user_from_auth(request)
+        except [ValueError, User.DoesNotExist]:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
         if request.method == 'GET':
             serializer = UserSerializer(user)
             return Response(serializer.data)
@@ -66,10 +71,3 @@ class UserController:
                 serializer.save()
                 return Response(serializer.data)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    @staticmethod
-    def get_object(pk):
-        try:
-            return User.objects.get(pk=pk)
-        except User.DoesNotExist:
-            raise Http404
