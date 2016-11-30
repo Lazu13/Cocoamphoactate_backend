@@ -17,7 +17,7 @@ urlpatterns = [
 
     url(r'^users$', UserController.get_users),
     url(r'^users/register$', UserController.register),
-    url(r'^users/(?P<pk>[0-9]+)$', UserController.get_put_delete_user),
+    url(r'^user/$', UserController.get_put_delete_user),
 
     url(r'^games$', GameController.get),
     url(r'^games/(?P<pk>[0-9]+)$', GameController.get_put_delete_game),
