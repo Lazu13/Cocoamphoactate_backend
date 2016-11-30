@@ -61,3 +61,10 @@ class ReviewsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Friends
         fields = '__all__'
+
+
+#score/
+class ScoreSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Score
+        fields = '__all__'
