@@ -1,6 +1,7 @@
 from django.http import *
 from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.decorators import api_view, authentication_classes
 from rest_framework.response import Response
 
 from ..serializers import *
@@ -8,6 +9,7 @@ from ..serializers import *
 
 class GameLibController:
     @api_view(['GET', 'POST'])
+    @authentication_classes((TokenAuthentication,))
     def get(request):
         if request.method == 'GET':
             libs = GameLib.objects.all()
@@ -21,6 +23,7 @@ class GameLibController:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @api_view(['GET', 'DELETE', 'PUT'])
+    @authentication_classes((TokenAuthentication,))
     def get_put_delete_lib(request, pk):
         lib = GameLibController.get_object(pk)
         if request.method == 'GET':
