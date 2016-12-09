@@ -7,7 +7,7 @@ from rest_framework.exceptions import ParseError
 from rest_framework.response import Response
 
 from ..recommendation_engine.recommendations import Engine, ALL_USERS, FRIENDS_ONLY
-from ..serializers import *
+from ..serializers import GameSerializer
 
 
 class RecommendationController():
@@ -17,10 +17,11 @@ class RecommendationController():
         engine = Engine()
         try:
             engine.set_user(pk)
-            engine.set_type(t)
+            engine.set_user(ALL_USERS if str(t) == 0 else FRIENDS_ONLY)
+            res = engine.get_best_matching()
         except ValueError as e:
             return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
-        return Response({'detail': 'GET answer', 'user' : pk, 'type' : t}, status=status.HTTP_200_OK)
+        return Response(res, status=status.HTTP_200_OK)
 
 
     @api_view(['GET'])
