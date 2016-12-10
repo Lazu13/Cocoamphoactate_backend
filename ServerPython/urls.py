@@ -10,11 +10,14 @@ from Cocoamphoactate.controllers.GameLibController import GameLibController
 from Cocoamphoactate.controllers.ReviewsController import ReviewsController
 from Cocoamphoactate.controllers.FavoritesController import FavoritesController
 from Cocoamphoactate.controllers.RecommendationController import RecommendationController
+from Cocoamphoactate.dataloader.dataloader import DataLoader
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api-token-auth/', views.obtain_auth_token),
     url(r'^users/login$', UserController.login_user),
+
+    url(r'^dataloader$', DataLoader.get_status),
 
     url(r'^users$', UserController.get_users),
     url(r'^users/register$', UserController.register),
@@ -32,7 +35,6 @@ urlpatterns = [
     url(r'^friends/pending/sent', FriendsPendingController.get_sent_by_me),
     url(r'^friends/pending/received', FriendsPendingController.get_received),
     url(r'^friends/pending/accept/(?P<pk>[0-9]+)$', FriendsPendingController.accept_invite),
-
 
     url(r'^gamelib$', GameLibController.get),
     url(r'^gamelib/(?P<pk>[0-9]+)$', GameLibController.get_put_delete_lib),
