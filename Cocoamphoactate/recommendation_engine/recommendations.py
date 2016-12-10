@@ -80,7 +80,7 @@ class Engine(object):
         Method used for getting recommedations using collaborative filtering based on all users or only frieds depending on type parameter
         :return: dictionary of recommended games
         """
-        from django.db.models import Q
+        from django.db.models import Q, Avg
         import copy
         import operator
         users = User.objects.all()
@@ -105,7 +105,28 @@ class Engine(object):
         del user_sims[self.user] # deletion of user for whom the analysis is beeing performed
         user_sims = sorted(user_sims.items(), key=operator.itemgetter(1), reverse=True) # dictionary containing user_ids and users' similarities
         #TODO get best games in 2 first users from user_sims list, and return them ad dictionary {<game_id>: <avg_grade>}
-        return {'detail': 'GET answer', 'user' : self.user, 'type' : self.type}
+        if len(user_sims) < 3:
+            return self.get_most_popular()
+
+        games_f = Score.objects.filter(user_id=user_sims[0][0]).order_by('-score')[:3]
+        games_s = Score.objects.filter(user_id=user_sims[1][0]).order_by('-score')[:3]
+
+        recommended_games = {}
+
+        games_f_dict = dict([(g.game_id.id, g.score) for g in games_f])
+        recommended_games.update(dict(sorted(games_f_dict.items(), key=operator.itemgetter(1), reverse=True)))
+
+        games_s_dict = dict([(g.game_id.id, g.score) for g in games_s])
+        recommended_games.update(dict(sorted(games_s_dict.items(), key=operator.itemgetter(1), reverse=True)))
+        grd = {}
+        for game in recommended_games:
+            scores = list(Score.objects.values('game_id').filter(game_id=game).annotate(Avg('score')))
+            print(scores)
+            idn = scores[0]['game_id']
+            avg = scores[0]['score__avg']
+            grd.update({idn: avg})
+
+        return grd
 
     @classmethod
     def pearson(cls, prefs, p1, p2):
