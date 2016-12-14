@@ -23,4 +23,4 @@ class RecommendationController():
     def get_most_popular(request):
         engine = Engine()
         games = engine.get_most_popular()
-        return Response(dict(games))
+        return Response(dict(games), status=status.HTTP_200_OK)
