@@ -45,6 +45,6 @@ urlpatterns = [
     url(r'^favs$', FavoritesController.get),
     url(r'^favs/(?P<pk>[0-9]+)$', FavoritesController.get_put_delete_favorite),
 
-    url(r'^users/recommend/(?P<pk>[0-9]+)/type/(?P<t>[0-1])$', RecommendationController.get),
+    url(r'^users/recommend/type/(?P<t>[0-1])$', RecommendationController.get),
     url(r'^users/recommend/mostPopular$', RecommendationController.get_most_popular),
 ]
