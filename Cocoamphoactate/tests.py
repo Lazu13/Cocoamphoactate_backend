@@ -7,10 +7,11 @@ from django.test import Client
 
 
 # Create your tests here.
+from django.test import TestCase
 from rest_framework.authtoken.models import Token
 
 
-class UserRestTests(unittest.TestCase):
+class UserRestTests(TestCase):
     def setUp(self):
         self.client = Client()
         User(id=1, username="restUser", password="restPassword").save()
