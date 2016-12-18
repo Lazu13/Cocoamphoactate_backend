@@ -15,7 +15,7 @@ class GameController:
         if request.method == 'GET':
             games = Game.objects.all()
             serializer = GameSerializer(games, many=True)
-            return Response(serializer.data)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         if request.method == 'POST':
             serializer = GameSerializer(data=request.data)
             if serializer.is_valid():
@@ -29,7 +29,7 @@ class GameController:
         game = GameController.get_object(pk)
         if request.method == 'GET':
             serializer = GameSerializer(game)
-            return Response(serializer.data)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         if request.method == 'DELETE':
             game.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
@@ -37,7 +37,7 @@ class GameController:
             serializer = GameSerializer(game, data=request.data)
             if serializer.is_valid():
                 serializer.save()
-                return Response(serializer.data)
+                return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @api_view(['POST'])
