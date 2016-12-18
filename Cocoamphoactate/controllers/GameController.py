@@ -4,11 +4,13 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import api_view, authentication_classes
 from rest_framework.response import Response
 from rest_framework.exceptions import ParseError
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 from ..serializers import *
 
 
 class GameController:
+    @ensure_csrf_cookie
     @api_view(['GET', 'POST'])
     @authentication_classes((TokenAuthentication,))
     def get(request):
@@ -23,6 +25,7 @@ class GameController:
                 return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    @ensure_csrf_cookie
     @api_view(['GET', 'DELETE', 'PUT'])
     @authentication_classes((TokenAuthentication,))
     def get_put_delete_game(request, pk):
@@ -40,6 +43,7 @@ class GameController:
                 return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    @ensure_csrf_cookie
     @api_view(['POST'])
     @authentication_classes((TokenAuthentication,))
     def add_grade(request, pk):

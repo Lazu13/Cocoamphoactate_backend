@@ -3,6 +3,7 @@ from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import api_view, authentication_classes
 from rest_framework.response import Response
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 from Cocoamphoactate.controllers.ControllerUtils import Utils
 from ..serializers import *
@@ -10,6 +11,7 @@ from ..serializers import *
 
 class FriendsPendingController:
     # friends/pending
+    @ensure_csrf_cookie
     @api_view(['GET'])
     @authentication_classes((TokenAuthentication,))
     def get_all_pending_ivites(request):
@@ -18,6 +20,7 @@ class FriendsPendingController:
         return Response(serializer.data)
 
     # friends/pending/sent
+    @ensure_csrf_cookie
     @api_view(['GET'])
     @authentication_classes((TokenAuthentication,))
     def get_sent_by_me(request):
@@ -27,6 +30,7 @@ class FriendsPendingController:
         return Response(serializer.data)
 
     # friends/pending/received
+    @ensure_csrf_cookie
     @api_view(['GET'])
     @authentication_classes((TokenAuthentication,))
     def get_received(request):
@@ -36,6 +40,7 @@ class FriendsPendingController:
         return Response(serializer.data)
 
     # friends/pending/add
+    @ensure_csrf_cookie
     @api_view(['POST'])
     @authentication_classes((TokenAuthentication,))
     def invite_user(request):
@@ -49,6 +54,7 @@ class FriendsPendingController:
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     # friends/pending/accept/{invite_id}
+    @ensure_csrf_cookie
     @api_view(['POST'])
     @authentication_classes((TokenAuthentication,))
     def accept_invite(request, pk):
