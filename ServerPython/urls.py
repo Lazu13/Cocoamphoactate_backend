@@ -28,7 +28,7 @@ urlpatterns = [
     url(r'^games/(?P<pk>[0-9]+)/grade$', GameController.add_grade),
 
     url(r'^friends$', FriendsController.get),
-    url(r'^friends/(?P<pk>[0-9]+)$', FriendsController.get_put_delete_friends),
+    url(r'^friends/my', FriendsController.get_my_friends),
 
     url(r'^friends/pending$', FriendsPendingController.get_all_pending_ivites),
     url(r'^friends/pending/add$', FriendsPendingController.invite_user),

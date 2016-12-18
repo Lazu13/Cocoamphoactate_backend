@@ -4,40 +4,28 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import api_view, authentication_classes
 from rest_framework.response import Response
 
+from Cocoamphoactate.controllers.ControllerUtils import Utils
 from ..serializers import *
 
 
 class FriendsController:
-    @api_view(['GET', 'POST'])
+    #/friends
+    @api_view(['GET'])
     @authentication_classes((TokenAuthentication,))
     def get(request):
         if request.method == 'GET':
             friends = Friends.objects.all()
             serializer = FriendsSerializer(friends, many=True)
-            return Response(serializer.data)
-        if request.method == 'POST':
-            serializer = FriendsSerializer(data=request.data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.data, status=status.HTTP_200_OK)
 
-    @api_view(['GET', 'DELETE', 'PUT'])
+    #/friends/my
+    @api_view(['GET'])
     @authentication_classes((TokenAuthentication,))
-    def get_put_delete_friends(request, pk):
-        friends = FriendsController.get_object(pk)
-        if request.method == 'GET':
-            serializer = FriendsSerializer(friends)
-            return Response(serializer.data)
-        if request.method == 'DELETE':
-            friends.delete()
-            return Response(status=status.HTTP_204_NO_CONTENT)
-        if request.method == 'PUT':
-            serializer = FriendsSerializer(friends, data=request.data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def get_my_friends(request):
+        current_user = Utils.get_user_from_auth(request)
+        friends = Friends.objects.filter(user_one=current_user.id)
+        serializers = FriendsSerializer(friends, many=True)
+        return Response(serializers.data, status=status.HTTP_200_OK)
 
     @staticmethod
     def get_object(pk):
