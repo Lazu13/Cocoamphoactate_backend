@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'rest_framework',
     'Cocoamphoactate.apps.CocoamphoactateConfig',
     'rest_framework.authtoken',
@@ -50,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 REST_FRAMEWORK = {
@@ -60,6 +62,10 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     )
 }
+
+CORS_ORIGIN_REGEX_WHITELIST = (r'^localhost:[0-9]+$', )
+
+CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'ServerPython.urls'
 
