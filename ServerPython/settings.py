@@ -63,9 +63,10 @@ REST_FRAMEWORK = {
     )
 }
 
-CORS_ORIGIN_REGEX_WHITELIST = (r'^localhost:[0-9]+$', )
+CORS_ORIGIN_REGEX_WHITELIST = (r'localhost:[0-9]+$', )
 
 CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'ServerPython.urls'
 
