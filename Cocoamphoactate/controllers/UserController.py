@@ -4,6 +4,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.exceptions import ParseError
 from rest_framework.response import Response
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 from Cocoamphoactate.controllers.ControllerUtils import Utils
 from ..serializers import *
@@ -11,6 +12,7 @@ from ..serializers import *
 
 class UserController:
     # users/login
+    @ensure_csrf_cookie
     @api_view(['POST'])
     @authentication_classes([])
     @permission_classes([])
@@ -34,6 +36,7 @@ class UserController:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
     # users
+    @ensure_csrf_cookie
     @api_view(['GET'])
     @authentication_classes((TokenAuthentication,))
     def get_users(request):
@@ -42,6 +45,7 @@ class UserController:
         return Response(serializer.data)
 
     # users/register
+    @ensure_csrf_cookie
     @api_view(['POST'])
     @authentication_classes([])
     @permission_classes([])
@@ -61,6 +65,7 @@ class UserController:
         return Response(status=status.HTTP_200_OK)
 
     # user
+    @ensure_csrf_cookie
     @api_view(['GET', 'DELETE', 'PUT'])
     @authentication_classes((TokenAuthentication,))
     def get_put_delete_user(request):

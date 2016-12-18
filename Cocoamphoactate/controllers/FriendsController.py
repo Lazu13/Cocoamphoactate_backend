@@ -3,6 +3,7 @@ from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import api_view, authentication_classes
 from rest_framework.response import Response
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 from Cocoamphoactate.controllers.ControllerUtils import Utils
 from ..serializers import *
@@ -10,6 +11,7 @@ from ..serializers import *
 
 class FriendsController:
     #/friends
+    @ensure_csrf_cookie
     @api_view(['GET'])
     @authentication_classes((TokenAuthentication,))
     def get(request):
@@ -19,6 +21,7 @@ class FriendsController:
             return Response(serializer.data, status=status.HTTP_200_OK)
 
     #/friends/my
+    @ensure_csrf_cookie
     @api_view(['GET'])
     @authentication_classes((TokenAuthentication,))
     def get_my_friends(request):
