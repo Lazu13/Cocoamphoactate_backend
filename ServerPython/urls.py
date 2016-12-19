@@ -11,6 +11,7 @@ from Cocoamphoactate.controllers.ReviewsController import ReviewsController
 from Cocoamphoactate.controllers.FavoritesController import FavoritesController
 from Cocoamphoactate.controllers.RecommendationController import RecommendationController
 from Cocoamphoactate.dataloader.dataloader import DataLoader
+from Cocoamphoactate.controllers.SearchController import Search
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -47,4 +48,6 @@ urlpatterns = [
 
     url(r'^users/recommend/type/(?P<t>[0-1])$', RecommendationController.get),
     url(r'^users/recommend/mostPopular$', RecommendationController.get_most_popular),
+
+    url(r'^users/games/search$', Search.search_games),
 ]

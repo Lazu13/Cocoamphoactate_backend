@@ -63,8 +63,14 @@ class ReviewsSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-#score/
+# score/
 class ScoreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Score
         fields = '__all__'
+
+
+class SearchSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Game
+        fields = ('id', 'title')
