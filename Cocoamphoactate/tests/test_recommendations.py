@@ -103,9 +103,8 @@ class EngineTestCase(TestCase):
 
     def test_recommendation_controller_get_most_popular(self):
         response = self.client.get('/users/recommend/mostPopular',
-                                   **{'Authorization': 'abctest1'})
-        #TODO out why response is not as expected (401 instead of 200)
-        #self.assertEqual(response.status_code, 200)
+                                   **{'HTTP_AUTHORIZATION': 'Token testToken'})
+        self.assertEqual(response.status_code, 200)
 
     def test_engine_pearson_algorithm(self):
         preferences = {

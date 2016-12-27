@@ -46,7 +46,8 @@ class FriendsPendingSerializer(serializers.ModelSerializer):
 
 class InvitesSerializer(serializers.Serializer):
     class Meta:
-        user_two = serializers.Field()
+        model = FriendsPending
+        user_two = 'user_two'
 
 
 # gamelib/
