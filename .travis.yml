@@ -7,4 +7,5 @@ install:
  - pip install -r requirements.txt
 
 script:
- - python3 manage.py test Cocoamphoactate.tests
+ - python3 manage.py test Cocoamphoactate.tests.test_friends_pending_rest
+ - python3 manage.py test Cocoamphoactate.tests.test_recommendations
