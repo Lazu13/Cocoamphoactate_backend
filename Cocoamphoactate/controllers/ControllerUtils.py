@@ -6,7 +6,6 @@ class Utils:
     def get_user_from_auth(request):
         try:
             user_id = request.auth.user_id
-            print(user_id)
         except ValueError:
             return ValueError("Invalid authentication token!")
         try:

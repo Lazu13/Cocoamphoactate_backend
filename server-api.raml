@@ -66,6 +66,35 @@ version: v1
     responses:
       200:
 
+/users/games/search:
+    post:
+        description: Searching by game title
+        body:
+            application/json:
+             example : |
+                {
+                    "substring" : "test"
+                }
+    responses:
+        200:
+            body:
+                application/json:
+                    example: |
+                        [
+                          {
+                            "id" : 1,
+                            "title" : "test",
+                            "description" : "test",
+                            "platform" : "PC"
+                          },
+                          {
+                            "id" : 2,
+                            "title" : "test2",
+                            "description" : "test2",
+                            "platform" : "PC"
+                          }
+                        ]
+
 /user:
   get:
     description: Retrieves given user by token authentication
@@ -331,7 +360,7 @@ games/{game_id}:
                 },
                 {
                   "id" : 2
-                  "user_one" : 3
+                  "user_one" : 1
                   "user_two" : 4
                 },
               ]
@@ -355,7 +384,7 @@ games/{game_id}:
                 },
                 {
                   "id" : 2
-                  "user_one" : 3
+                  "user_one" : 1
                   "user_two" : 4
                 },
               ]
@@ -379,7 +408,7 @@ games/{game_id}:
 
 /gamelib:
   get:
-    description: Accepting received invite
+    description: Listing game library
       headers:
         Authorization:
           token <GENERATED_TOKEN>

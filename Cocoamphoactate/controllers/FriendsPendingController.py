@@ -47,15 +47,22 @@ class FriendsPendingController:
         current_user = Utils.get_user_from_auth(request)
         serializer = InvitesSerializer(data=request.data)
         if serializer.is_valid():
-            init_data = serializer.initial_data["user_two"]
+            init_data = int(serializer.initial_data["user_two"])
+            if current_user.id == init_data:
+                return Response("Cannot send invite to yourself", status=status.HTTP_400_BAD_REQUEST)
             invitation = FriendsPending(user_one_id=current_user.id, user_two_id=init_data)
-            invitation.save()
-            return Response(serializer.initial_data, status=status.HTTP_202_ACCEPTED)
+            try:
+                FriendsPending.objects.get(user_one_id=current_user, user_two_id=init_data)
+                FriendsPending.objects.get(user_one_id=init_data, user_two_id=current_user)
+                return Response("Cannot send invite twice", status=status.HTTP_400_BAD_REQUEST)
+            except FriendsPending.DoesNotExist:
+                invitation.save()
+                return Response(serializer.initial_data, status=status.HTTP_202_ACCEPTED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     # friends/pending/accept/{invite_id}
     @ensure_csrf_cookie
-    @api_view(['POST'])
+    @api_view(['GET'])
     @authentication_classes((TokenAuthentication,))
     def accept_invite(request, pk):
         current_user = Utils.get_user_from_auth(request)
