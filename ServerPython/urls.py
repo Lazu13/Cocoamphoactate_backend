@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^users$', UserController.get_users),
     url(r'^users/register$', UserController.register),
     url(r'^user$', UserController.get_put_delete_user),
+    url(r'^users/(?P<pk>[0-9]+)$', UserController.get_user),
 
     url(r'^games$', GameController.get),
     url(r'^games/(?P<pk>[0-9]+)$', GameController.get_put_delete_game),
@@ -40,8 +41,9 @@ urlpatterns = [
     url(r'^gamelib$', GameLibController.get),
     url(r'^gamelib/(?P<pk>[0-9]+)$', GameLibController.get_put_delete_lib),
 
-    url(r'^reviews$', ReviewsController.get),
-    url(r'^reviews/(?P<pk>[0-9]+)$', ReviewsController.get_put_delete_review),
+    url(r'^reviews$', ReviewsController.get_all_reviews),
+    url(r'^reviews/add$', ReviewsController.post_game_review),
+    url(r'^reviews/(?P<pk>[0-9]+)$', ReviewsController.get_game_reviews),
 
     url(r'^favs$', FavoritesController.get),
     url(r'^favs/(?P<pk>[0-9]+)$', FavoritesController.get_put_delete_favorite),

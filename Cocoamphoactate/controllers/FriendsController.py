@@ -27,7 +27,10 @@ class FriendsController:
     def get_my_friends(request):
         current_user = Utils.get_user_from_auth(request)
         friends = Friends.objects.filter(user_one=current_user.id)
-        serializers = FriendsSerializer(friends, many=True)
+        users=[]
+        for friend in friends:
+            users.append(User.objects.get(id=friend.user_two_id))
+        serializers = MyFriendsSerilizer(users, many=True)
         return Response(serializers.data, status=status.HTTP_200_OK)
 
     @staticmethod

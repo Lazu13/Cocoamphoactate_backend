@@ -48,16 +48,36 @@ class FriendsPendingController:
         serializer = InvitesSerializer(data=request.data)
         if serializer.is_valid():
             init_data = int(serializer.initial_data["user_two"])
+            flag = False
+            try:
+                User.objects.get(id=init_data)
+            except User.DoesNotExist:
+                return Response("Cannot invite non existing user", status=status.HTTP_400_BAD_REQUEST)
             if current_user.id == init_data:
                 return Response("Cannot send invite to yourself", status=status.HTTP_400_BAD_REQUEST)
+            try:
+                friends = Friends.objects.get(user_one_id=current_user.id, user_two_id=init_data)
+                return Response("Cannot invite user. Already friend", status=status.HTTP_400_BAD_REQUEST)
+            except Friends.DoesNotExist:
+                pass
+            try:
+                friends = Friends.objects.get(user_one_id=init_data, user_two_id=current_user.id)
+                return Response("Cannot invite user. Already friend", status=status.HTTP_400_BAD_REQUEST)
+            except Friends.DoesNotExist:
+                pass
             invitation = FriendsPending(user_one_id=current_user.id, user_two_id=init_data)
             try:
                 FriendsPending.objects.get(user_one_id=current_user, user_two_id=init_data)
+                return Response("Cannot send invite twice", status=status.HTTP_400_BAD_REQUEST)
+            except FriendsPending.DoesNotExist:
+                pass
+            try:
                 FriendsPending.objects.get(user_one_id=init_data, user_two_id=current_user)
                 return Response("Cannot send invite twice", status=status.HTTP_400_BAD_REQUEST)
             except FriendsPending.DoesNotExist:
-                invitation.save()
-                return Response(serializer.initial_data, status=status.HTTP_202_ACCEPTED)
+                pass
+            invitation.save()
+            return Response(serializer.initial_data, status=status.HTTP_202_ACCEPTED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     # friends/pending/accept/{invite_id}

@@ -32,6 +32,25 @@ version: v1
                   "mail": "testMail3"
                 }
               ]
+
+/users/{userId}:
+    get:
+    description: Retrieve user with given id
+    headers:
+      Authorization:
+        Token <GENERATED_TOKEN>
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                  "id": 2,
+                  "username": "CtestUSerKtestUSer3testUSerXtestUSerW",
+                  "password": "2testPass4testPassAtestPassNtestPassR",
+                  "email": ""
+              }
+
 /users/login:
   post:
     description: Endpoint for logining - as response token is returned
@@ -293,15 +312,13 @@ games/{game_id}:
             example: |
                 [
                   {
-                    "id" : 1,
-                    "user_one" : 3,
-                    "user_two" : 4
+                    "id": 2,
+                    "username": "CtestUSerKtestUSer3testUSerXtestUSerW"
                   },
                   {
-                    "id" : 2,
-                    "user_one" : 3,
-                    "user_two" : 2
-                  },
+                    "id": 3,
+                    "username": "EtestUSer6testUSerCtestUSer5testUSerC"
+                  }
                 ]
 /friends/pending:
   get:
