@@ -30,6 +30,12 @@ class FriendsSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class MyFriendsSerilizer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username')
+
+
 # favorites/
 class FavoritesSerializer(serializers.ModelSerializer):
     class Meta:
@@ -50,6 +56,11 @@ class InvitesSerializer(serializers.Serializer):
         user_two = 'user_two'
 
 
+class InviteSerilizer(serializers.Serializer):
+    class Meta:
+        fields = ('id', 'user_id', 'username')
+
+
 # gamelib/
 class GameLibSerializer(serializers.ModelSerializer):
     class Meta:
@@ -60,8 +71,8 @@ class GameLibSerializer(serializers.ModelSerializer):
 # reviews/
 class ReviewsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Friends
-        fields = '__all__'
+        model = Reviews
+        fields = ('game', 'review')
 
 
 # score/

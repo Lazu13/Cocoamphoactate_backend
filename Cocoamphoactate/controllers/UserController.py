@@ -64,6 +64,18 @@ class UserController:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         return Response(status=status.HTTP_200_OK)
 
+    # users/{userId}
+    @ensure_csrf_cookie
+    @api_view(['GET'])
+    @authentication_classes((TokenAuthentication,))
+    def get_user(request, pk):
+        try:
+            user = User.objects.get(id=pk)
+        except User.DoesNotExist:
+            return Response("Given user does not exisit", status=status.HTTP_404_NOT_FOUND)
+        serializer = UserSerializer(user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
     # user
     @ensure_csrf_cookie
     @api_view(['GET', 'DELETE', 'PUT'])
