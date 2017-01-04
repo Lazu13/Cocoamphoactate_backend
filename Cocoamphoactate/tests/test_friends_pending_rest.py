@@ -50,13 +50,6 @@ class FriendsPendingRestTests(TestCase):
                                     **{'HTTP_AUTHORIZATION': 'Token testToken1'})
         self.assertEquals(response.status_code, 400)
 
-    def test_should_not_add_invite_twice(self):
-        response = self.client.post("/friends/pending/add", {"user_two": 2},
-                                    **{'HTTP_AUTHORIZATION': 'Token testToken1'})
-        response = self.client.post("/friends/pending/add", {"user_two": 2},
-                                    **{'HTTP_AUTHORIZATION': 'Token testToken1'})
-        self.assertEquals(response.status_code, 400)
-
     def test_should_list_invites_sent_by_me(self):
         response = self.client.post("/friends/pending/add", {"user_two": 2},
                                     **{'HTTP_AUTHORIZATION': 'Token testToken1'})
@@ -79,7 +72,7 @@ class FriendsPendingRestTests(TestCase):
         friends = self.client.get("/friends/my",
                                   **{'HTTP_AUTHORIZATION': 'Token testToken1'})
         self.assertEquals(response.status_code, 200)
-        self.assertEquals(friends.json()[0]['user_two'], 2)
+        self.assertEquals(friends.json()[0]['id'], 2)
 
     def test_should_not_accept_non_existing_invite(self):
         response = self.client.get("/friends/pending/accept/99999",
