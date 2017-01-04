@@ -16,60 +16,60 @@ class EngineTestCase(TestCase):
 
         # Prepare test data
 
-        u1 = User.objects.create(username='test1', first_name='test', last_name='test', email='test@test.com',
-                                 password='testpass')
-        u2 = User.objects.create(username='test2', first_name='test', last_name='test', email='test@test.com')
-        u3 = User.objects.create(username='test3', first_name='test', last_name='test', email='test@test.com')
-        u4 = User.objects.create(username='test4', first_name='test', last_name='test', email='test@test.com')
+        self.u1 = User.objects.create(username='test1', first_name='test', last_name='test', email='test@test.com',
+                                      password='testpass')
+        self.u2 = User.objects.create(username='test2', first_name='test', last_name='test', email='test@test.com')
+        self.u3 = User.objects.create(username='test3', first_name='test', last_name='test', email='test@test.com')
+        self.u4 = User.objects.create(username='test4', first_name='test', last_name='test', email='test@test.com')
 
-        g1 = Game.objects.create(title='test1', description='test', platform='PC')
-        g2 = Game.objects.create(title='test2', description='test', platform='PC')
-        g3 = Game.objects.create(title='test3', description='test', platform='PC')
-        g4 = Game.objects.create(title='test4', description='test', platform='PC')
-        g5 = Game.objects.create(title='test5', description='test', platform='PC')
-        g6 = Game.objects.create(title='test6', description='test', platform='PC')
-        g7 = Game.objects.create(title='test7', description='test', platform='PC')
-        g8 = Game.objects.create(title='test8', description='test', platform='PC')
+        self.g1 = Game.objects.create(title='test1', description='test', platform='PC')
+        self.g2 = Game.objects.create(title='test2', description='test', platform='PC')
+        self.g3 = Game.objects.create(title='test3', description='test', platform='PC')
+        self.g4 = Game.objects.create(title='test4', description='test', platform='PC')
+        self.g5 = Game.objects.create(title='test5', description='test', platform='PC')
+        self.g6 = Game.objects.create(title='test6', description='test', platform='PC')
+        self.g7 = Game.objects.create(title='test7', description='test', platform='PC')
+        self.g8 = Game.objects.create(title='test8', description='test', platform='PC')
 
-        Score.objects.create(game_id=g1, user_id=u1, score=1)
-        Score.objects.create(game_id=g1, user_id=u3, score=2)
-        #game 1 average: 1.5
+        Score.objects.create(game_id=self.g1, user_id=self.u1, score=1)
+        Score.objects.create(game_id=self.g1, user_id=self.u3, score=2)
+        # game 1 average: 1.5
 
-        Score.objects.create(game_id=g2, user_id=u2, score=2)
-        Score.objects.create(game_id=g2, user_id=u3, score=3)
-        Score.objects.create(game_id=g2, user_id=u4, score=4)
-        #game 2 average: 3
+        Score.objects.create(game_id=self.g2, user_id=self.u2, score=2)
+        Score.objects.create(game_id=self.g2, user_id=self.u3, score=3)
+        Score.objects.create(game_id=self.g2, user_id=self.u4, score=4)
+        # game 2 average: 3
 
-        Score.objects.create(game_id=g3, user_id=u2, score=4)
-        Score.objects.create(game_id=g3, user_id=self.user, score=5)
+        Score.objects.create(game_id=self.g3, user_id=self.u2, score=4)
+        Score.objects.create(game_id=self.g3, user_id=self.user, score=5)
         #game 3 average: 4.5
 
-        Score.objects.create(game_id=g4, user_id=u1, score=4)
-        Score.objects.create(game_id=g4, user_id=u2, score=3)
-        Score.objects.create(game_id=g4, user_id=u3, score=4)
-        Score.objects.create(game_id=g4, user_id=self.user, score=5)
-        #game 4 average: 4
+        Score.objects.create(game_id=self.g4, user_id=self.u1, score=4)
+        Score.objects.create(game_id=self.g4, user_id=self.u2, score=3)
+        Score.objects.create(game_id=self.g4, user_id=self.u3, score=4)
+        # game 4 average: 4
 
-        Score.objects.create(game_id=g5, user_id=u4, score=3)
-        #game 5 average: 3
+        Score.objects.create(game_id=self.g5, user_id=self.u4, score=3)
+        Score.objects.create(game_id=self.g5, user_id=self.u2, score=3)
+        # game 5 average: 3
 
-        Score.objects.create(game_id=g6, user_id=u1, score=2)
-        Score.objects.create(game_id=g6, user_id=u2, score=3)
-        Score.objects.create(game_id=g6, user_id=u3, score=4)
-        Score.objects.create(game_id=g6, user_id=u4, score=5)
-        Score.objects.create(game_id=g6, user_id=self.user, score=4)
+        Score.objects.create(game_id=self.g6, user_id=self.u1, score=2)
+        Score.objects.create(game_id=self.g6, user_id=self.u2, score=3)
+        Score.objects.create(game_id=self.g6, user_id=self.u3, score=4)
+        Score.objects.create(game_id=self.g6, user_id=self.u4, score=5)
+        Score.objects.create(game_id=self.g6, user_id=self.user, score=4)
         #game 6 average: 3.60
 
-        Score.objects.create(game_id=g7, user_id=u2, score=3)
-        Score.objects.create(game_id=g7, user_id=u2, score=5)
-        Score.objects.create(game_id=g7, user_id=self.user, score=5)
-        #game 7 average: 13/3
+        Score.objects.create(game_id=self.g7, user_id=self.u2, score=3)
+        Score.objects.create(game_id=self.g7, user_id=self.u2, score=5)
+        Score.objects.create(game_id=self.g7, user_id=self.user, score=5)
+        # game 7 average: 13/3
 
-        Score.objects.create(game_id=g8, user_id=u1, score=5)
-        Score.objects.create(game_id=g8, user_id=u2, score=4)
-        Score.objects.create(game_id=g8, user_id=u4, score=5)
-        Score.objects.create(game_id=g8, user_id=self.user, score=5)
-        #game 8 average: 4.75
+        Score.objects.create(game_id=self.g8, user_id=self.u1, score=5)
+        Score.objects.create(game_id=self.g8, user_id=self.u2, score=4)
+        Score.objects.create(game_id=self.g8, user_id=self.u4, score=5)
+        Score.objects.create(game_id=self.g8, user_id=self.user, score=5)
+        # game 8 average: 4.75
 
     def test_engine_init(self):
         self.assertEqual(self.engine.type, ALL_USERS)
@@ -106,6 +106,17 @@ class EngineTestCase(TestCase):
                                    **{'HTTP_AUTHORIZATION': 'Token testToken'})
         self.assertEqual(response.status_code, 200)
 
+    def test_recommendation_controller_get_best_matching(self):
+        response = self.client.get('/users/recommend/type/0',
+                                   **{'HTTP_AUTHORIZATION': 'Token testToken'})
+        self.assertEqual(response.status_code, 200)
+        response = self.client.get('/users/recommend/type/1',
+                                   **{'HTTP_AUTHORIZATION': 'Token testToken'})
+        self.assertEqual(response.status_code, 200)
+        response = self.client.get('/users/recommend/type/2',
+                                   **{'HTTP_AUTHORIZATION': 'Token testToken'})
+        self.assertEqual(response.status_code, 404)
+
     def test_engine_pearson_algorithm(self):
         preferences = {
             1: {1: 5, 2: 5, 3: 1},
@@ -125,6 +136,4 @@ class EngineTestCase(TestCase):
         self.engine.set_user(self.user.id)
         
         res = self.engine.get_best_matching()
-        print(res)
-        #TODO implement the test
-        pass
+        self.assertEqual(list(res.keys()), [2, 4, 5])
