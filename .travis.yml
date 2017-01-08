@@ -5,6 +5,7 @@ python:
 
 install:
  - pip install -r requirements.txt
+ - pip install coverage
  - pip install coveralls
 
 script:
@@ -12,6 +13,7 @@ script:
  - coverage run -p --source='.' manage.py test Cocoamphoactate.tests.test_recommendations
  - coverage run -p --source='.' manage.py test Cocoamphoactate.tests.test_search_rest
  - coverage run -p --source='.' manage.py test Cocoamphoactate.tests.test_user_rest
+ - coverage combine
 
 after_success:
- coveralls
+ - coveralls
