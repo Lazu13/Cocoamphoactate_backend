@@ -5,13 +5,13 @@ python:
 
 install:
  - pip install -r requirements.txt
- - pip install coveralls
+ - pip install coverage
 
 script:
- - coverage run --source=Cocoamphoactate.tests.test_friends_pending_rest manage.py test
+ - coverage run --source=Cocoamphoactate.tests.test_friends_pending_rest  manage.py test
  - python3 manage.py test Cocoamphoactate.tests.test_recommendations
  - python3 manage.py test Cocoamphoactate.tests.test_search_rest
  - python3 manage.py test Cocoamphoactate.tests.test_user_rest
 
- after_success:
- - coveralls
+after_success:
+  coveralls
