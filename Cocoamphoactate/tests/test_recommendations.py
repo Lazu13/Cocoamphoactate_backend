@@ -79,6 +79,9 @@ class EngineTestCase(TestCase):
         with self.assertRaises(ValueError):
             self.engine.set_user(-1)
 
+        with self.assertRaises(TypeError):
+            self.engine.set_user("1")
+
     def test_engine_set_user(self):
         self.engine.set_user(1)
         self.assertEqual(self.engine.user, 1)
@@ -99,7 +102,7 @@ class EngineTestCase(TestCase):
     def test_engine_get_most_popular(self):
         res = self.engine.get_most_popular()
         act = [(8, 4.75), (3, 4.5), (7, 13 / 3)]
-        self.assertTrue(res == act)
+        self.assertTrue(res == dict(act))
 
     def test_recommendation_controller_get_most_popular(self):
         response = self.client.get('/users/recommend/mostPopular',
@@ -114,6 +117,9 @@ class EngineTestCase(TestCase):
                                    **{'HTTP_AUTHORIZATION': 'Token testToken'})
         self.assertEqual(response.status_code, 200)
         response = self.client.get('/users/recommend/type/2',
+                                   **{'HTTP_AUTHORIZATION': 'Token testToken'})
+        self.assertEqual(response.status_code, 400)
+        response = self.client.get('/users/recommend/type/3',
                                    **{'HTTP_AUTHORIZATION': 'Token testToken'})
         self.assertEqual(response.status_code, 404)
 
@@ -137,3 +143,7 @@ class EngineTestCase(TestCase):
         
         res = self.engine.get_best_matching()
         self.assertEqual(list(res.keys()), [2, 4, 5])
+
+        self.engine.set_type(FRIENDS_ONLY)
+        res = self.engine.get_best_matching()
+        self.assertEqual(list(res.keys())   , [8, 3, 7])

@@ -16,12 +16,12 @@ class RecommendationController():
         try:
             user = Utils.get_user_from_auth(request)
             engine.set_user(user.id)
-            engine.set_user(ALL_USERS if str(t) == 0 else FRIENDS_ONLY)
+            engine.set_type(t)
             res = engine.get_best_matching()
         except ValueError as e:
             return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
         except TypeError as e:
-            return Response(str(e) , status=status.HTTP_400_BAD_REQUEST)
+            return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
         return Response(res, status=status.HTTP_200_OK)
 
     @api_view(['GET'])
@@ -30,4 +30,4 @@ class RecommendationController():
     def get_most_popular(request):
         engine = Engine()
         games = engine.get_most_popular()
-        return Response(dict(games), status=status.HTTP_200_OK)
+        return Response(games, status=status.HTTP_200_OK)

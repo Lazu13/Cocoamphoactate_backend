@@ -77,7 +77,7 @@ class Engine(object):
 
         sorted_grd = sorted(grd.items(), key=operator.itemgetter(1), reverse=True)
         sorted_grd = sorted_grd[:3]
-        return sorted_grd
+        return dict(sorted_grd)
 
     def get_best_matching(self):
         """
@@ -110,7 +110,8 @@ class Engine(object):
             sim = self.pearson(prefs, self.user, user.id)
             user_sims.update({user.id: sim})
 
-        del user_sims[self.user] # deletion of user for whom the analysis is beeing performed
+        if self.user in user_sims.keys():
+            del user_sims[self.user] # deletion of user for whom the analysis is beeing performed
         user_sims = sorted(user_sims.items(), key=operator.itemgetter(1), reverse=True) # dictionary containing user_ids and users' similarities
         if len(user_sims) < 3:
             return self.get_most_popular()
