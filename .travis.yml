@@ -8,7 +8,7 @@ install:
  - pip install coveralls
 
 script:
- - coverage run --source='.' manage.py tes
+ - coverage run --source='.' manage.py test
  - python3 manage.py test Cocoamphoactate.tests.test_friends_pending_rest
  - python3 manage.py test Cocoamphoactate.tests.test_recommendations
  - python3 manage.py test Cocoamphoactate.tests.test_search_rest
