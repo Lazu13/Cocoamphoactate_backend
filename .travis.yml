@@ -13,5 +13,5 @@ script:
  - python3 manage.py test Cocoamphoactate.tests.test_search_rest
  - python3 manage.py test Cocoamphoactate.tests.test_user_rest
 
- after_success:
+after_success:
  coveralls
