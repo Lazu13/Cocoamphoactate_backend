@@ -5,9 +5,13 @@ python:
 
 install:
  - pip install -r requirements.txt
+ - pip install coveralls
 
 script:
- - python3 manage.py test Cocoamphoactate.tests.test_friends_pending_rest
- - python3 manage.py test Cocoamphoactate.tests.test_recommendations
- - python3 manage.py test Cocoamphoactate.tests.test_search_rest
- - python3 manage.py test Cocoamphoactate.tests.test_user_rest
+ - coverage run -p --source='.' manage.py test Cocoamphoactate.tests.test_friends_pending_rest
+ - coverage run -p --source='.' manage.py test Cocoamphoactate.tests.test_recommendations
+ - coverage run -p --source='.' manage.py test Cocoamphoactate.tests.test_search_rest
+ - coverage run -p --source='.' manage.py test Cocoamphoactate.tests.test_user_rest
+
+after_success:
+ coveralls
