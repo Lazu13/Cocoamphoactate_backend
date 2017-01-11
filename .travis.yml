@@ -17,6 +17,7 @@ script:
  - coverage run -p --source='.' manage.py test Cocoamphoactate.tests.test_game_rest
  - coverage run -p --source='.' manage.py test Cocoamphoactate.tests.test_gamelib_rest
  - coverage run -p --source='.' manage.py test Cocoamphoactate.tests.test_reviews_rest
+ - coverage run -p --source='.' manage.py test Cocoamphoactate.tests.test_friends_rest
  - coverage combine
 
 after_success:

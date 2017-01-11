@@ -8,7 +8,7 @@ from rest_framework.authtoken.models import Token
 from Cocoamphoactate.models import FriendsPending, Friends
 
 
-class FriendsPendingRestTests(TestCase):
+class FriendsRestTests(TestCase):
     def setUp(self):
         self.client = Client()
         User(id=1, username="restUser1", password="restPassword1").save()
