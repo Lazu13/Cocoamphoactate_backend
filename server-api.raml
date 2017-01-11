@@ -29,7 +29,7 @@ version: v1
                   "id": 4,
                   "login": "testLogin3",
                   "password": "testPassword3",
-                  "mail": "testMail3"
+                  "email": "testMail3"
                 }
               ]
 
@@ -77,7 +77,7 @@ version: v1
       application/json:
         example: |
           {
-            "id" : 1
+            "id" : 1,
             "username" : "testUSername",
             "password" : "testPassword",
             "email" : "testEmail"
@@ -86,6 +86,35 @@ version: v1
       200:
 
 /users/games/search:
+    post:
+      description: Searching by game title
+      body:
+         application/json:
+         example : |
+            {
+              "substring" : "test"
+            }
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                [
+                  {
+                    "id" : 1,
+                    "title" : "test",
+                    "description" : "test",
+                    "platform" : "PC"
+                  },
+                  {
+                    "id" : 2,
+                    "title" : "test2",
+                    "description" : "test2",
+                    "platform" : "PC"
+                  }
+                ]
+
+/users/users/search:
     post:
         description: Searching by game title
         body:
@@ -96,23 +125,23 @@ version: v1
                 }
     responses:
         200:
-            body:
-                application/json:
-                    example: |
-                        [
-                          {
-                            "id" : 1,
-                            "title" : "test",
-                            "description" : "test",
-                            "platform" : "PC"
-                          },
-                          {
-                            "id" : 2,
-                            "title" : "test2",
-                            "description" : "test2",
-                            "platform" : "PC"
-                          }
-                        ]
+          body:
+            application/json:
+              example: |
+                [
+                  {
+                    "id": 1,
+                    "username": "testuser1",
+                    "password": "testpass1",
+                    "email": "user1@user.com"
+                  },
+                  {
+                    "id": 2,
+                    "username": "testuser2",
+                    "password": "testpass2",
+                    "email": "user2@user.com"
+                  }
+                ]
 
 /user:
   get:
@@ -172,20 +201,20 @@ version: v1
         body:
           application/json:
             example:|
-                [
-                  {
-                    "id" : 1,
-                    "title" : "test",
-                    "description" : "test",
-                    "platform" : "PC"
-                  },
-                  {
-                    "id" : 2,
-                    "title" : "test2",
-                    "description" : "test2",
-                    "platform" : "PC"
-                  }
-                ]
+              [
+                {
+                  "id" : 1,
+                  "title" : "test",
+                  "description" : "test",
+                  "platform" : "PC"
+                },
+                {
+                  "id" : 2,
+                  "title" : "test2",
+                  "description" : "test2",
+                  "platform" : "PC"
+                }
+              ]
   post:
     description: Adds new game to database
     headers:
@@ -220,13 +249,13 @@ games/{game_id}:
       200:
         body:
           application/json:
-              example: |
-                {
-                  "id" : 1,
-                  "title" : "test",
-                  "description" : "test",
-                  "platform" : "PC"
-                }
+            example: |
+              {
+                "id" : 1,
+                "title" : "test",
+                "description" : "test",
+                "platform" : "PC"
+              }
   put:
     description: Edits game by given game_id
     headers:
@@ -415,13 +444,36 @@ games/{game_id}:
     responses:
       200:
 
-/users/recommend/{user_id}/type/{type_id}:
+/users/recommend/type/{type_id}:
   get:
-  TODO
+    description: Listing game recommendations
+    headers:
+      Authorization:
+        token <GENERATED_TOKEN>
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "1" : 5
+                "2" : 4.75
+                "3" : 4
+              }
 
 /users/recommend/mostPopular:
   get:
-  TODO
+    description: Listing most popular games
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "1": 5,
+                "4": 4.5,
+                "5": 4.333333333333333
+              }
 
 /gamelib:
   get:

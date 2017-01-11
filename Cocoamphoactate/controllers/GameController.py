@@ -58,6 +58,9 @@ class GameController:
                 'Invalid JSON - {0}'.format(error.detail),
                 status=status.HTTP_400_BAD_REQUEST
             )
+        rec = Score.objects.filter(user_id=data['user_id'], score=data['score'])
+        if len(rec) > 0:
+            return Response({'message': 'Cannot score a game multiple times'}, status=status.HTTP_409_CONFLICT)
         serializer = ScoreSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
