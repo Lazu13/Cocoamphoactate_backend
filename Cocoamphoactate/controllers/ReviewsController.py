@@ -5,21 +5,11 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import api_view, authentication_classes
 from rest_framework.response import Response
 
-from Cocoamphoactate.controllers import ControllerUtils
 from Cocoamphoactate.controllers.ControllerUtils import Utils
 from ..serializers import *
 
 
 class ReviewsController:
-    @ensure_csrf_cookie
-    @api_view(['GET'])
-    @authentication_classes((TokenAuthentication,))
-    def get_all_reviews(request):
-        if request.method == 'GET':
-            reviews = Reviews.objects.all()
-            serializer = ReviewsSerializer(reviews, many=True)
-            return Response(serializer.data)
-
     @ensure_csrf_cookie
     @api_view(['POST'])
     @authentication_classes((TokenAuthentication,))
@@ -41,6 +31,18 @@ class ReviewsController:
             reviews = Reviews.objects.filter(game=pk)
             serializer = ReviewsSerializer(reviews, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @ensure_csrf_cookie
+    @api_view(['DELETE'])
+    @authentication_classes((TokenAuthentication,))
+    def remove_review(request, pk):
+        if request.method == 'DELETE':
+            try:
+                reviews = Reviews.objects.get(pk=pk)
+                reviews.delete()
+            except Reviews.DoesNotExist:
+                return Response(status=status.HTTP_404_NOT_FOUND)
+            return Response(status=status.HTTP_200_OK)
 
     @staticmethod
     def get_object(pk):

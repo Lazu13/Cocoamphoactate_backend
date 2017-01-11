@@ -39,7 +39,7 @@ class MyFriendsSerilizer(serializers.ModelSerializer):
 # favorites/
 class FavoritesSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Friends
+        model = Favorites
         fields = '__all__'
 
 
@@ -64,7 +64,7 @@ class InviteSerilizer(serializers.Serializer):
 # gamelib/
 class GameLibSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Friends
+        model = GameLib
         fields = '__all__'
 
 
