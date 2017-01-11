@@ -10,32 +10,32 @@ class UserRestTests(TestCase):
     def setUp(self):
         self.client = Client()
         User(id=1, username="restUser", password="restPassword").save()
-        Token(user_id=1,created=datetime.now(), key="testToken").save()
+        Token(user_id=1, created=datetime.now(), key="testToken").save()
 
     def test_login_non_existing_user(self):
-        response = self.client.post("/users/login", {'username':'non_exist', 'password':'some_pass'})
+        response = self.client.post("/users/login", {'username': 'non_exist', 'password': 'some_pass'})
         self.failUnlessEqual(response.status_code, 400)
 
     def test_login_with_wrong_password(self):
-        response = self.client.post("/users/login", {'username':'restUser', 'password':'some_pass'})
+        response = self.client.post("/users/login", {'username': 'restUser', 'password': 'some_pass'})
         self.failUnlessEqual(response.status_code, 400)
 
     def test_login_and_get_token(self):
-        response = self.client.post("/users/login", {'username':'restUser', 'password':'restPassword'})
+        response = self.client.post("/users/login", {'username': 'restUser', 'password': 'restPassword'})
         self.assertEquals(response.status_code, 200)
         self.assertIn("token", response.data)
 
     def test_should_fail_if_user_already_exists(self):
-        response = self.client.post("/users/register", {'username':'restUser', 'password':'restPassword'})
+        response = self.client.post("/users/register", {'username': 'restUser', 'password': 'restPassword'})
         self.assertEquals(response.status_code, 400)
 
     def test_should_fail_with_invalid_json_format(self):
-        response = self.client.post("/users/register", {'user': 'user', 'password':'restPassword'})
+        response = self.client.post("/users/register", {'user': 'user', 'password': 'restPassword'})
         self.assertEquals(response.status_code, 400)
         self.assertEquals(response.json()['username'][0], "This field is required.")
 
     def test_should_fail_with_too_short_password(self):
-        response = self.client.post("/users/register", {'username': 'restUser', 'password':'r'})
+        response = self.client.post("/users/register", {'username': 'restUser', 'password': 'r'})
         self.assertEquals(response.status_code, 400)
 
     def test_should_fail_with_empty_password(self):
@@ -51,7 +51,7 @@ class UserRestTests(TestCase):
         self.assertEquals(response.status_code, 200)
 
     def test_should_process_authenticated_request_properly(self):
-        response = self.client.get("/users",  **{'HTTP_AUTHORIZATION' : 'Token testToken'})
+        response = self.client.get("/users", **{'HTTP_AUTHORIZATION': 'Token testToken'})
         self.assertEquals(response.status_code, 200)
 
     def test_should_block_unauthenticated_request(self):
@@ -59,10 +59,24 @@ class UserRestTests(TestCase):
         self.assertEquals(response.status_code, 401)
 
     def test_should_fail_to_authenticate_with_invalid_token(self):
-        response = self.client.get("/users",  **{'HTTP_AUTHORIZATION':'Token dfdad'})
+        response = self.client.get("/users", **{'HTTP_AUTHORIZATION': 'Token dfdad'})
         self.assertEquals(response.status_code, 401)
 
     def test_should_list_all_users(self):
-        response = self.client.get("/users",  **{'HTTP_AUTHORIZATION':'Token testToken'})
+        response = self.client.get("/users", **{'HTTP_AUTHORIZATION': 'Token testToken'})
         self.assertEquals(response.status_code, 200)
         self.assertIn("username", response.json()[0])
+
+    def test_should_get_user(self):
+        response = self.client.get("/users/1", **{'HTTP_AUTHORIZATION': 'Token testToken'})
+        self.assertEqual(response.json()["username"], "restUser")
+
+    def test_should_remove_user(self):
+        response = self.client.delete("/users/1", **{'HTTP_AUTHORIZATION': 'Token testToken'})
+        users = User.objects.all()
+        self.assertEqual(len(users), 0)
+
+    def test_should_edit_user(self):
+        response = self.client.put("/users/1", {'username': 'newUser', 'password': 'newPassword'})
+        user = User.objects.get(pk=1)
+        self.assertEqual(user.username, "newUser")
