@@ -68,18 +68,10 @@ class UserRestTests(TestCase):
         self.assertIn("username", response.json()[0])
 
     def test_should_get_user(self):
-        response = self.client.get("/user", **{'HTTP_AUTHORIZATION': 'Token testToken'},
-                                   **{'HTTP_AUTHORIZATION': 'Token testToken'})
+        response = self.client.get("/user", **{'HTTP_AUTHORIZATION': 'Token testToken'})
         self.assertEqual(response.json()["username"], "restUser")
 
     def test_should_remove_user(self):
-        response = self.client.delete("/user", **{'HTTP_AUTHORIZATION': 'Token testToken'},
-                                      **{'HTTP_AUTHORIZATION': 'Token testToken'})
+        response = self.client.delete("/user", **{'HTTP_AUTHORIZATION': 'Token testToken'})
         users = User.objects.all()
         self.assertEqual(len(users), 0)
-
-    def test_should_edit_user(self):
-        response = self.client.put("/user", {'username': 'newUser', 'password': 'newPassword'},
-                                   **{'HTTP_AUTHORIZATION': 'Token testToken'})
-        user = User.objects.get(pk=1)
-        self.assertEqual(user.username, "newUser")
