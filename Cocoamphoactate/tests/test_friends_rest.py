@@ -20,3 +20,8 @@ class FriendsRestTests(TestCase):
     def test_should_get_all_my_friends(self):
         response = self.client.get("/friends/my", **{'HTTP_AUTHORIZATION': 'Token testToken1'})
         self.assertEqual(response.json()[0]["username"], "restUser2")
+
+    def test_should_get_all_friends_relationships(self):
+        response = self.client.get("/friends", **{'HTTP_AUTHORIZATION': 'Token testToken1'})
+        friends = Friends.objects.all()
+        self.assertEqual(len(friends), len(response.json()))
