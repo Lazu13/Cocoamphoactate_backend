@@ -41,12 +41,12 @@ urlpatterns = [
     url(r'^gamelib$', GameLibController.get),
     url(r'^gamelib/(?P<pk>[0-9]+)$', GameLibController.get_put_delete_lib),
 
-    url(r'^reviews$', ReviewsController.get_all_reviews),
     url(r'^reviews/add$', ReviewsController.post_game_review),
     url(r'^reviews/(?P<pk>[0-9]+)$', ReviewsController.get_game_reviews),
+    url(r'^reviews/remove/(?P<pk>[0-9]+)$', ReviewsController.remove_review),
 
     url(r'^favs$', FavoritesController.get),
-    url(r'^favs/(?P<pk>[0-9]+)$', FavoritesController.get_put_delete_favorite),
+    url(r'^favs/(?P<pk>[0-9]+)$', FavoritesController.remove_favorite),
 
     url(r'^users/recommend/type/(?P<t>[0-2])$', RecommendationController.get),
     url(r'^users/recommend/mostPopular$', RecommendationController.get_most_popular),

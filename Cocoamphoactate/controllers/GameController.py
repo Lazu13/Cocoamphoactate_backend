@@ -39,7 +39,11 @@ class GameController:
         if request.method == 'PUT':
             serializer = GameSerializer(game, data=request.data)
             if serializer.is_valid():
-                serializer.save()
+                g = Game.objects.get(pk=serializer.initial_data['id'])
+                g.title = serializer.initial_data['title']
+                g.description = serializer.initial_data['description']
+                g.platform = serializer.initial_data['platform']
+                g.save()
                 return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

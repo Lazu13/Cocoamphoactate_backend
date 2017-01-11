@@ -94,6 +94,9 @@ class UserController:
         if request.method == 'PUT':
             serializer = UserSerializer(user, data=request.data)
             if serializer.is_valid():
-                serializer.save()
+                u = User.objects.get(pk = user.id)
+                u.username = serializer.initial_data["username"]
+                u.password = serializer.initial_data["password"]
+                u.save()
                 return Response(serializer.data, status=status.HTTP_200_OK)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
