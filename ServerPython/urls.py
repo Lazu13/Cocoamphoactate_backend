@@ -52,4 +52,5 @@ urlpatterns = [
     url(r'^users/recommend/mostPopular$', RecommendationController.get_most_popular),
 
     url(r'^users/games/search$', Search.search_games),
+    url(r'^users/users/search$', Search.search_users),
 ]
