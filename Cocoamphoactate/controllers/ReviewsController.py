@@ -19,7 +19,9 @@ class ReviewsController:
             rev = Reviews.objects.filter(game=request.data['game'], user=current_user)
             if len(rev) > 0:
                 return Response({'message': 'Cannot review a game multiple times'}, status=status.HTTP_409_CONFLICT)
-            serializer = ReviewsSerializer(data=request.data)
+            data = request.data
+            data.update({"user": current_user.id})
+            serializer = ReviewsSerializer(data=data)
             if serializer.is_valid():
                 review = Reviews(user=current_user, game_id=serializer.data["game"], review=serializer.data["review"])
                 review.save()
