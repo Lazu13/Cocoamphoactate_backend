@@ -10,7 +10,6 @@ from Cocoamphoactate.controllers.GameLibController import GameLibController
 from Cocoamphoactate.controllers.ReviewsController import ReviewsController
 from Cocoamphoactate.controllers.FavoritesController import FavoritesController
 from Cocoamphoactate.controllers.RecommendationController import RecommendationController
-from Cocoamphoactate.dataloader.dataloader import DataLoader
 from Cocoamphoactate.controllers.SearchController import Search
 
 urlpatterns = [
