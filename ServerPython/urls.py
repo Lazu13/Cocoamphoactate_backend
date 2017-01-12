@@ -18,8 +18,6 @@ urlpatterns = [
     url(r'^api-token-auth/', views.obtain_auth_token),
     url(r'^users/login$', UserController.login_user),
 
-    url(r'^dataloader$', DataLoader.get_status),
-
     url(r'^users$', UserController.get_users),
     url(r'^users/register$', UserController.register),
     url(r'^user$', UserController.get_put_delete_user),
