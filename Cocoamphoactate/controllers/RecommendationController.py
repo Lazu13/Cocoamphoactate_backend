@@ -19,7 +19,6 @@ class RecommendationController():
             engine.set_type(t)
             res = engine.get_best_matching()
         except ValueError as e:
-            print(e)
             return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
         except TypeError as e:
 
