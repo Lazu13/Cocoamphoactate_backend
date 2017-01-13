@@ -72,7 +72,7 @@ class GameLibSerializer(serializers.ModelSerializer):
 class ReviewsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Reviews
-        fields = ('game', 'review')
+        fields = ('game', 'user', 'review')
 
 
 # score/

@@ -1,7 +1,7 @@
 from django.http import *
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.decorators import api_view, authentication_classes
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
 from rest_framework.exceptions import ParseError
 from django.views.decorators.csrf import ensure_csrf_cookie
@@ -12,7 +12,8 @@ from ..serializers import *
 class GameController:
     @ensure_csrf_cookie
     @api_view(['GET', 'POST'])
-    @authentication_classes((TokenAuthentication,))
+    @authentication_classes([])
+    @permission_classes([])
     def get(request):
         if request.method == 'GET':
             games = Game.objects.all()

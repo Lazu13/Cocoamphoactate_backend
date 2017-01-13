@@ -10,15 +10,12 @@ from Cocoamphoactate.controllers.GameLibController import GameLibController
 from Cocoamphoactate.controllers.ReviewsController import ReviewsController
 from Cocoamphoactate.controllers.FavoritesController import FavoritesController
 from Cocoamphoactate.controllers.RecommendationController import RecommendationController
-from Cocoamphoactate.dataloader.dataloader import DataLoader
 from Cocoamphoactate.controllers.SearchController import Search
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api-token-auth/', views.obtain_auth_token),
     url(r'^users/login$', UserController.login_user),
-
-    url(r'^dataloader$', DataLoader.get_status),
 
     url(r'^users$', UserController.get_users),
     url(r'^users/register$', UserController.register),
