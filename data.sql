@@ -25,6 +25,10 @@ INSERT INTO Cocoamphoactate_game VALUES(2, 'The Elder Scrolls V: Skyrim', 'PC', 
 INSERT INTO Cocoamphoactate_game VALUES(3, 'Assassins Creed: Unity', 'PC', 'Fifth game of Assassins Creed Series made by Ubisoft.');
 INSERT INTO Cocoamphoactate_game VALUES(4, 'Rise of the Tomb Raider', 'PC', 'Successor of Tomb Raider from 2013 made by Crystal Dynamics.');
 INSERT INTO Cocoamphoactate_game VALUES(5, 'Gothic', 'PC', 'First game of the iconic game Series made by Piranha Bytes.');
+INSERT INTO Cocoamphoactate_game VALUES(6, 'Gothic 2', 'PC', 'Second game of the iconic game Series made by Piranha Bytes.');
+INSERT INTO Cocoamphoactate_game VALUES(7, 'Gothic 3', 'PC', 'Third game of the iconic game Series made by Piranha Bytes.');
+INSERT INTO Cocoamphoactate_game VALUES(8, 'The Wither 2: Assassins of Kings', 'PC/PS3/XB360', 'Wither is a wandering monster slayer made by CDProject RED.');
+INSERT INTO Cocoamphoactate_game VALUES(9, 'The Wither', 'PC/PS3/XB360', 'Wither is a wandering monster slayer made by CDProject RED.');
 
 DELETE FROM Cocoamphoactate_favorites;
 INSERT INTO Cocoamphoactate_favorites VALUES(1, 1, 5);
@@ -95,4 +99,13 @@ INSERT INTO Cocoamphoactate_score VALUES(7, 4, 3, 5);
 INSERT INTO Cocoamphoactate_score VALUES(8, 4, 5, 4);
 INSERT INTO Cocoamphoactate_score VALUES(9, 5, 2, 4);
 INSERT INTO Cocoamphoactate_score VALUES(10, 5, 1, 4);
-INSERT INTO Cocoamphoactate_score VALUES(11, 5, 7, 5);
+INSERT INTO Cocoamphoactate_score VALUES(11, 5, 4, 5);
+INSERT INTO Cocoamphoactate_score VALUES(12, 5, 6, 5);
+INSERT INTO Cocoamphoactate_score VALUES(13, 1, 7, 5);
+INSERT INTO Cocoamphoactate_score VALUES(14, 5, 7, 5);
+INSERT INTO Cocoamphoactate_score VALUES(15, 6, 7, 4);
+INSERT INTO Cocoamphoactate_score VALUES(16, 8, 3, 5);
+INSERT INTO Cocoamphoactate_score VALUES(17, 8, 4, 5);
+INSERT INTO Cocoamphoactate_score VALUES(18, 9, 6, 5);
+INSERT INTO Cocoamphoactate_score VALUES(19, 9, 7, 5);
+INSERT INTO Cocoamphoactate_score VALUES(20, 7, 2, 5);

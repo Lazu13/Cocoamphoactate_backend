@@ -5,6 +5,7 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 from rest_framework.response import Response
 from rest_framework.exceptions import ParseError
 from django.views.decorators.csrf import ensure_csrf_cookie
+from django.db.models import Avg
 
 from ..serializers import *
 
@@ -17,8 +18,20 @@ class GameController:
     def get(request):
         if request.method == 'GET':
             games = Game.objects.all()
-            serializer = GameSerializer(games, many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            data = []
+            for game in games:
+                lst = list(Score.objects.values('game_id').filter(game_id=game.id).annotate(Avg('score')))
+                if len(lst) > 0:
+                    avr = lst[0]['score__avg']
+                else:
+                    avr = 0
+                dat = {"id": game.id,
+                       "title": game.title,
+                       "description": game.description,
+                       "platform": game.platform,
+                       "score": avr}
+                data.append(dat)
+            return Response(data, status=status.HTTP_200_OK)
         if request.method == 'POST':
             serializer = GameSerializer(data=request.data)
             if serializer.is_valid():

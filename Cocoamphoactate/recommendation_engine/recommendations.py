@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # encoding utf-8
-
 from ..models import User, Game, Friends, Score
 
 __all__ = ['Engine', 'ALL_USERS', 'FRIENDS_ONLY']
@@ -89,14 +88,21 @@ class Engine(object):
         import operator
         if self.user is None:
             raise User.DoesNotExist
-        users = User.objects.all()
+        users = []
+        us = User.objects.all()
+        for u in us:
+            users.append(u)
+
         if self.type == FRIENDS_ONLY:
             friends = Friends.objects.filter(Q(user_one_id=self.user) | Q(user_two_id=self.user))
-            if len(friends) > 4:
-                users = users.filter(Q(id=friends.values('user_one_id')) | Q(id=friends.values('user_two_id')))
-            if len(friends) < 2:
-                return self.get_most_popular()
-
+            if len(friends) > 2:
+                users = [User.objects.filter(id=self.user)[0]]
+                for friend in friends:
+                    if friend.user_one_id == self.user:
+                        id = friend.user_two_id
+                    else:
+                        id = friend.user_one_id
+                    users.append(User.objects.filter(id=id)[0])
         user_sims = {}
         prefs = {}
         for user in users:
@@ -106,13 +112,11 @@ class Engine(object):
                 tab.update({score['game_id']: score['score']})
             prefs.update({copy.deepcopy(user.id): copy.deepcopy(tab)})
         for user in users:
-            sim = self.pearson(prefs, self.user, user.id)
-            user_sims.update({user.id: sim})
+            if not user.id == self.user:
+                sim = self.pearson(prefs, self.user, user.id)
+                user_sims.update({user.id: sim})
 
-        if self.user in user_sims.keys():
-            del user_sims[self.user] # deletion of user for whom the analysis is beeing performed
         user_sims = sorted(user_sims.items(), key=operator.itemgetter(1), reverse=True) # dictionary containing user_ids and users' similarities
-
 
         games_f = Score.objects.values('game_id', 'score').filter(user_id=user_sims[0][0]).order_by('-score')[:8]
         games_s = Score.objects.values('game_id', 'score').filter(user_id=user_sims[1][0]).order_by('-score')[:8]
@@ -150,24 +154,26 @@ class Engine(object):
         :return: float similarity of people
         """
         from math import sqrt
+
         si = {}
         for item in prefs[p1]:
             if item in prefs[p2]:
                 si[item] = 1
 
         n = float(len(si))
-
         if n == 0:
             return 0
 
         sum1 = sum([prefs[p1][it] for it in si])
         sum2 = sum([prefs[p2][it] for it in si])
-        sqsum1 = sum([pow(prefs[p1][it], 2) for it in si])
-        sqsum2 = sum([pow(prefs[p2][it], 2) for it in si])
+
+        sum1sq = sum([pow(prefs[p1][it], 2) for it in si])
+        sum2sq = sum([pow(prefs[p2][it], 2) for it in si])
+
         psum = sum([prefs[p1][it] * prefs[p2][it] for it in si])
 
         num = psum - (sum1 * sum2 / n)
-        den = sqrt((sqsum1 - pow(sum1, 2) / n) * (sqsum2 - pow(sum2, 2) / n))
+        den = sqrt((sum1sq - pow(sum1, 2) / n) * (sum2sq - pow(sum2, 2) / n))
         if den == 0:
             return 0
 
