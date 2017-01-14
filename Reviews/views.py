@@ -53,8 +53,8 @@ class ReviewsController:
             return Response(status=status.HTTP_200_OK)
 
     @staticmethod
-    def get_object(pk):
+    def get_object(pk, user):
         try:
-            return Reviews.objects.get(pk=pk)
+            return Reviews.objects.get(game=pk, user=user)
         except Reviews.DoesNotExist:
             raise Http404

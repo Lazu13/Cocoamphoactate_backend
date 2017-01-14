@@ -21,9 +21,11 @@ class FavoritesController:
             serializer = FavoritesSerializer(favs, many=True)
             return Response(serializer.data)
         if request.method == 'POST':
-            serializer = FavoritesSerializer(data=request.data)
+            data = request.data
+            data.update({"user": current_user.id})
+            serializer = FavoritesSerializer(data=data)
             if serializer.is_valid():
-                fav = Favorites.objects.filter(user=request.data['user'], game=request.data['game'])
+                fav = Favorites.objects.filter(user=current_user.id, game=request.data['game'])
                 if len(fav) > 0:
                     return Response("Cannot add twice", status=status.HTTP_400_BAD_REQUEST)
                 serializer.save()
@@ -34,14 +36,14 @@ class FavoritesController:
     @api_view(['DELETE'])
     @authentication_classes((TokenAuthentication,))
     def remove_favorite(request, pk):
-        fav = FavoritesController.get_object(pk)
+        fav = FavoritesController.get_object(pk, Utils.get_user_from_auth(request))
         if request.method == 'DELETE':
             fav.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
 
     @staticmethod
-    def get_object(pk):
+    def get_object(pk, user):
         try:
-            return Favorites.objects.get(pk=pk)
+            return Favorites.objects.get(game=pk, user=user)
         except Favorites.DoesNotExist:
             raise Http404

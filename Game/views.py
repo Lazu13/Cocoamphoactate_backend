@@ -1,5 +1,6 @@
 from django.http import *
 from django.views.decorators.csrf import ensure_csrf_cookie
+from django.db.models import Avg
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
@@ -18,8 +19,20 @@ class GameController:
     def get(request):
         if request.method == 'GET':
             games = Game.objects.all()
-            serializer = GameSerializer(games, many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            data = []
+            for game in games:
+                lst = list(Score.objects.values('game_id').filter(game_id=game.id).annotate(Avg('score')))
+                if len(lst) > 0:
+                    avr = lst[0]['score__avg']
+                else:
+                    avr = 0
+                dat = {"id": game.id,
+                       "title": game.title,
+                       "description": game.description,
+                       "platform": game.platform,
+                       "score": avr}
+                data.append(dat)
+            return Response(data, status=status.HTTP_200_OK)
         if request.method == 'POST':
             serializer = GameSerializer(data=request.data)
             if serializer.is_valid():
@@ -60,7 +73,7 @@ class GameController:
                 'Invalid JSON - {0}'.format(error.detail),
                 status=status.HTTP_400_BAD_REQUEST
             )
-        rec = Score.objects.filter(user_id=data['user_id'], score=data['score'])
+        rec = Score.objects.filter(user_id=data['user_id'], game_id=data['game_id'])
         if len(rec) > 0:
             return Response({'message': 'Cannot score a game multiple times'}, status=status.HTTP_409_CONFLICT)
         serializer = ScoreSerializer(data=data)
