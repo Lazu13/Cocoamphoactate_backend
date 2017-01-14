@@ -9,15 +9,15 @@ install:
  - pip install coveralls
 
 script:
- - coverage run -p --source='.' manage.py test Cocoamphoactate.tests.test_friends_pending_rest
- - coverage run -p --source='.' manage.py test Cocoamphoactate.tests.test_recommendations
- - coverage run -p --source='.' manage.py test Cocoamphoactate.tests.test_search_rest
- - coverage run -p --source='.' manage.py test Cocoamphoactate.tests.test_user_rest
- - coverage run -p --source='.' manage.py test Cocoamphoactate.tests.test_favorites_rest
- - coverage run -p --source='.' manage.py test Cocoamphoactate.tests.test_game_rest
- - coverage run -p --source='.' manage.py test Cocoamphoactate.tests.test_gamelib_rest
- - coverage run -p --source='.' manage.py test Cocoamphoactate.tests.test_reviews_rest
- - coverage run -p --source='.' manage.py test Cocoamphoactate.tests.test_friends_rest
+ - coverage run -p --source='.' manage.py test Users.tests
+ - coverage run -p --source='.' manage.py test Favorites.tests
+ - coverage run -p --source='.' manage.py test Friends.tests
+ - coverage run -p --source='.' manage.py test FriendsPending.tests
+ - coverage run -p --source='.' manage.py test Game.tests
+ - coverage run -p --source='.' manage.py test GameLib.tests
+ - coverage run -p --source='.' manage.py test Recommendation.tests
+ - coverage run -p --source='.' manage.py test Reviews.tests
+ - coverage run -p --source='.' manage.py test Search.tests
  - coverage combine
 
 after_success:
