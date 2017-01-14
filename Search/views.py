@@ -1,10 +1,13 @@
+from django.contrib.auth.models import User
 from django.views.decorators.csrf import ensure_csrf_cookie
 from rest_framework import status
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
 
-from Cocoamphoactate.models import Game, User
-from Cocoamphoactate.serializers import GameSerializer, SearchSerializer, UserSerializer
+from Game.models import Game
+from Game.serializer import GameSerializer
+from Search.serializer import SearchSerializer
+from Users.serializer import UserSerializer
 
 
 class Search:

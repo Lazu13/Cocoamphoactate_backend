@@ -1,11 +1,15 @@
+from django.contrib.auth.models import User
 from django.http import *
+from django.views.decorators.csrf import ensure_csrf_cookie
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import api_view, authentication_classes
 from rest_framework.response import Response
-from django.views.decorators.csrf import ensure_csrf_cookie
 
-from Cocoamphoactate.controllers.ControllerUtils import Utils
+from Cocoamphoactate.ControllerUtils import Utils
+from Friends.models import Friends
+from FriendsPending.models import FriendsPending
+from FriendsPending.serializer import InvitesSerializer
 from ..serializers import *
 
 

@@ -2,7 +2,6 @@ from django.test import TestCase
 from ..recommendation_engine.recommendations import Engine, FRIENDS_ONLY, ALL_USERS
 from rest_framework.authtoken.models import Token
 from django.test import Client
-from ..controllers import RecommendationController
 from ..models import User, Score, Game
 from datetime import datetime
 
@@ -46,7 +45,7 @@ class EngineTestCase(TestCase):
 
         Score.objects.create(game_id=self.g4, user_id=self.u1, score=4)
         Score.objects.create(game_id=self.g4, user_id=self.u2, score=3)
-        Score.objects.create(game_id=self.g4, user_id=self.u3, score=4)
+        Score.objects.create(game_id=self.g4, user_id=self.user, score=4)
         # game 4 average: 4
 
         Score.objects.create(game_id=self.g5, user_id=self.u4, score=3)
@@ -68,7 +67,7 @@ class EngineTestCase(TestCase):
         Score.objects.create(game_id=self.g8, user_id=self.u1, score=5)
         Score.objects.create(game_id=self.g8, user_id=self.u2, score=4)
         Score.objects.create(game_id=self.g8, user_id=self.u4, score=5)
-        Score.objects.create(game_id=self.g8, user_id=self.user, score=5)
+        Score.objects.create(game_id=self.g8, user_id=self.u3, score=5)
         # game 8 average: 4.75
 
     def test_engine_init(self):
@@ -142,7 +141,7 @@ class EngineTestCase(TestCase):
         self.engine.set_user(self.user.id)
 
         res = self.engine.get_best_matching()
-        self.assertEqual(list(res.keys()), [2, 4, 5])
+        self.assertEqual(list(res.keys()), [8, 2, 5])
 
         self.engine.set_type(FRIENDS_ONLY)
         res = self.engine.get_best_matching()

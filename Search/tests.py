@@ -32,7 +32,7 @@ class SearchRestTests(TestCase):
         response = self.client.post("/users/games/search", {'substring': 'rdaasadsaavczvcxvv'})
         self.assertEquals(response.data, [])
 
-    def user_test_happy_path(self):
+    def test_user_happy_path(self):
         response = self.client.post("/users/users/search", {'substring': 'Test'})
         self.assertEquals(response.status_code, 200)
 

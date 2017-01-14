@@ -2,23 +2,20 @@ from django.conf.urls import url
 from django.contrib import admin
 
 from rest_framework.authtoken import views
-from Cocoamphoactate.controllers.UserController import UserController
-from Cocoamphoactate.controllers.GameController import GameController
-from Cocoamphoactate.controllers.FriendsController import FriendsController
-from Cocoamphoactate.controllers.FriendsPendingController import FriendsPendingController
-from Cocoamphoactate.controllers.GameLibController import GameLibController
-from Cocoamphoactate.controllers.ReviewsController import ReviewsController
-from Cocoamphoactate.controllers.FavoritesController import FavoritesController
-from Cocoamphoactate.controllers.RecommendationController import RecommendationController
-from Cocoamphoactate.dataloader.dataloader import DataLoader
-from Cocoamphoactate.controllers.SearchController import Search
+from Users.views import UserController
+from Game.views import GameController
+from GameLib.views import GameLibController
+from Friends.views import FriendsController
+from FriendsPending.views import FriendsPendingController
+from Favorites.views import FavoritesController
+from Reviews.views import ReviewsController
+from Recommendation.views import RecommendationController
+from Search.views import Search
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api-token-auth/', views.obtain_auth_token),
     url(r'^users/login$', UserController.login_user),
-
-    url(r'^dataloader$', DataLoader.get_status),
 
     url(r'^users$', UserController.get_users),
     url(r'^users/register$', UserController.register),

@@ -71,7 +71,29 @@ class UserRestTests(TestCase):
         response = self.client.get("/user", **{'HTTP_AUTHORIZATION': 'Token testToken'})
         self.assertEqual(response.json()["username"], "restUser")
 
+    def test_should_put_user(self):
+        import json
+        response = self.client.put("/user", data=json.dumps({'username': 'usert', 'password': 'usert'}),
+                                   content_type='application/json', **{'HTTP_AUTHORIZATION': 'Token testToken'})
+        self.assertEqual(response.json()["username"], "usert")
+
+    def test_should_get_user_data(self):
+        response = self.client.get("/user", **{'HTTP_AUTHORIZATION': 'Token testToken'})
+        users = User.objects.all()
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get("/users/-1", **{'HTTP_AUTHORIZATION': 'Token testToken'})
+        users = User.objects.all()
+        self.assertEqual(response.status_code, 404)
+
     def test_should_remove_user(self):
         response = self.client.delete("/user", **{'HTTP_AUTHORIZATION': 'Token testToken'})
         users = User.objects.all()
         self.assertEqual(len(users), 0)
+
+    def test_utils_should_throw_exception(self):
+        response = self.client.get("/user", **{'HTTP_AUTHORIZATION': 'Token athsrthsrthsth'})
+        self.assertEqual(response.status_code, 401)
+
+
+

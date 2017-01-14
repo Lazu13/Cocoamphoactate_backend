@@ -1,27 +1,43 @@
-from datetime import datetime
-
 from django.contrib.auth.models import User
-from django.test import Client
-from django.test import TestCase
-from rest_framework.authtoken.models import Token
+from django.http import *
+from django.views.decorators.csrf import ensure_csrf_cookie
+from rest_framework import status
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.decorators import api_view, authentication_classes
+from rest_framework.response import Response
 
-from Cocoamphoactate.models import FriendsPending, Friends
+from Cocoamphoactate.ControllerUtils import Utils
+from Friends.models import Friends
+from Friends.serializer import FriendsSerializer, MyFriendsSerilizer
 
 
-class FriendsRestTests(TestCase):
-    def setUp(self):
-        self.client = Client()
-        User(id=1, username="restUser1", password="restPassword1").save()
-        User(id=2, username="restUser2", password="restPassword2").save()
-        Token(user_id=1, created=datetime.now(), key="testToken1").save()
-        Token(user_id=2, created=datetime.now(), key="testToken2").save()
-        Friends(user_one_id=1, user_two_id=2).save()
+class FriendsController:
+    # /friends
+    @ensure_csrf_cookie
+    @api_view(['GET'])
+    @authentication_classes((TokenAuthentication,))
+    def get(request):
+        if request.method == 'GET':
+            friends = Friends.objects.all()
+            serializer = FriendsSerializer(friends, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def test_should_get_all_my_friends(self):
-        response = self.client.get("/friends/my", **{'HTTP_AUTHORIZATION': 'Token testToken1'})
-        self.assertEqual(response.json()[0]["username"], "restUser2")
+    # /friends/my
+    @ensure_csrf_cookie
+    @api_view(['GET'])
+    @authentication_classes((TokenAuthentication,))
+    def get_my_friends(request):
+        current_user = Utils.get_user_from_auth(request)
+        friends = Friends.objects.filter(user_one=current_user.id)
+        users = []
+        for friend in friends:
+            users.append(User.objects.get(id=friend.user_two_id))
+        serializers = MyFriendsSerilizer(users, many=True)
+        return Response(serializers.data, status=status.HTTP_200_OK)
 
-    def test_should_get_all_friends_relationships(self):
-        response = self.client.get("/friends", **{'HTTP_AUTHORIZATION': 'Token testToken1'})
-        friends = Friends.objects.all()
-        self.assertEqual(len(friends), len(response.json()))
+    @staticmethod
+    def get_object(pk):
+        try:
+            return Friends.objects.get(pk=pk)
+        except Friends.DoesNotExist:
+            raise Http404

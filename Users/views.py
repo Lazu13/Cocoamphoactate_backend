@@ -1,12 +1,14 @@
+from django.contrib.auth.models import User
+from django.views.decorators.csrf import ensure_csrf_cookie
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.exceptions import ParseError
 from rest_framework.response import Response
-from django.views.decorators.csrf import ensure_csrf_cookie
 
-from Cocoamphoactate.controllers.ControllerUtils import Utils
+from Cocoamphoactate.ControllerUtils import Utils
+from Users.serializer import LoginSerializer, UserSerializer
 from ..serializers import *
 
 
@@ -94,9 +96,9 @@ class UserController:
         if request.method == 'PUT':
             serializer = UserSerializer(user, data=request.data)
             if serializer.is_valid():
-                u = User.objects.get(pk = user.id)
+                u = User.objects.get(pk=user.id)
                 u.username = serializer.initial_data["username"]
                 u.password = serializer.initial_data["password"]
                 u.save()
-                return Response(serializer.data, status=status.HTTP_200_OK)
+                return Response(request.data, status=status.HTTP_200_OK)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

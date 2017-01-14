@@ -21,6 +21,7 @@ class RecommendationController():
         except ValueError as e:
             return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
         except TypeError as e:
+
             return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
         return Response(res, status=status.HTTP_200_OK)
 

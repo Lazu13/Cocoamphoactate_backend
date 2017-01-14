@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # encoding utf-8
 
-from ..models import User, Game, Friends, Score
 
 __all__ = ['Engine', 'ALL_USERS', 'FRIENDS_ONLY']
 
@@ -94,8 +93,8 @@ class Engine(object):
             friends = Friends.objects.filter(Q(user_one_id=self.user) | Q(user_two_id=self.user))
             if len(friends) > 4:
                 users = users.filter(Q(id=friends.values('user_one_id')) | Q(id=friends.values('user_two_id')))
-            else:
-                users = friends
+            if len(friends) < 2:
+                return self.get_most_popular()
 
         user_sims = {}
         prefs = {}
@@ -105,7 +104,6 @@ class Engine(object):
             for score in scores:
                 tab.update({score['game_id']: score['score']})
             prefs.update({copy.deepcopy(user.id): copy.deepcopy(tab)})
-
         for user in users:
             sim = self.pearson(prefs, self.user, user.id)
             user_sims.update({user.id: sim})
@@ -113,8 +111,7 @@ class Engine(object):
         if self.user in user_sims.keys():
             del user_sims[self.user] # deletion of user for whom the analysis is beeing performed
         user_sims = sorted(user_sims.items(), key=operator.itemgetter(1), reverse=True) # dictionary containing user_ids and users' similarities
-        if len(user_sims) < 3:
-            return self.get_most_popular()
+
 
         games_f = Score.objects.values('game_id', 'score').filter(user_id=user_sims[0][0]).order_by('-score')[:8]
         games_s = Score.objects.values('game_id', 'score').filter(user_id=user_sims[1][0]).order_by('-score')[:8]
