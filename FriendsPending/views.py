@@ -9,8 +9,7 @@ from rest_framework.response import Response
 from Cocoamphoactate.ControllerUtils import Utils
 from Friends.models import Friends
 from FriendsPending.models import FriendsPending
-from FriendsPending.serializer import InvitesSerializer
-from ..serializers import *
+from FriendsPending.serializer import InvitesSerializer, FriendsPendingSerializer
 
 
 class FriendsPendingController:

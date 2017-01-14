@@ -5,7 +5,8 @@ from django.test import Client
 from django.test import TestCase
 from rest_framework.authtoken.models import Token
 
-from Cocoamphoactate.models import Favorites, Game
+from Favorites.models import Favorites
+from Game.models import Game
 
 
 class FavoritesRestTests(TestCase):

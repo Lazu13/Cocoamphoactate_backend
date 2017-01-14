@@ -6,7 +6,8 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 from rest_framework.response import Response
 
 from Cocoamphoactate.ControllerUtils import Utils
-from ..serializers import *
+from Reviews.models import Reviews
+from Reviews.serializer import ReviewsSerializer
 
 
 class ReviewsController:

@@ -1,12 +1,13 @@
 from django.http import *
+from django.views.decorators.csrf import ensure_csrf_cookie
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
-from rest_framework.response import Response
 from rest_framework.exceptions import ParseError
-from django.views.decorators.csrf import ensure_csrf_cookie
+from rest_framework.response import Response
 
-from ..serializers import *
+from Game.models import Game, Score
+from Game.serializer import GameSerializer, ScoreSerializer
 
 
 class GameController:

@@ -5,7 +5,7 @@ from django.test import Client
 from django.test import TestCase
 from rest_framework.authtoken.models import Token
 
-from Cocoamphoactate.models import Game
+from Game.models import Game
 
 
 class SearchRestTests(TestCase):

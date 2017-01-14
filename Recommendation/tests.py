@@ -1,9 +1,12 @@
-from django.test import TestCase
-from ..recommendation_engine.recommendations import Engine, FRIENDS_ONLY, ALL_USERS
-from rest_framework.authtoken.models import Token
-from django.test import Client
-from ..models import User, Score, Game
 from datetime import datetime
+
+from django.contrib.auth.models import User
+from django.test import Client
+from django.test import TestCase
+from rest_framework.authtoken.models import Token
+
+from Game.models import Game, Score
+from Recommendation.recommendations import Engine, ALL_USERS, FRIENDS_ONLY
 
 
 class EngineTestCase(TestCase):

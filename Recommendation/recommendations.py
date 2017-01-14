@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 # encoding utf-8
+from django.contrib.auth.models import User
 
+from Friends.models import Friends
+from Game.models import Game, Score
 
 __all__ = ['Engine', 'ALL_USERS', 'FRIENDS_ONLY']
 

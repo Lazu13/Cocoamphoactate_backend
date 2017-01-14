@@ -7,7 +7,7 @@ from rest_framework.response import Response
 
 from Cocoamphoactate.ControllerUtils import Utils
 from Favorites.models import Favorites
-from ..serializers import *
+from Favorites.serializer import FavoritesSerializer
 
 
 class FavoritesController:
@@ -24,7 +24,7 @@ class FavoritesController:
             serializer = FavoritesSerializer(data=request.data)
             if serializer.is_valid():
                 fav = Favorites.objects.filter(user=request.data['user'], game=request.data['game'])
-                if len(fav)>0:
+                if len(fav) > 0:
                     return Response("Cannot add twice", status=status.HTTP_400_BAD_REQUEST)
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_202_ACCEPTED)

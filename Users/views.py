@@ -9,7 +9,6 @@ from rest_framework.response import Response
 
 from Cocoamphoactate.ControllerUtils import Utils
 from Users.serializer import LoginSerializer, UserSerializer
-from ..serializers import *
 
 
 class UserController:
