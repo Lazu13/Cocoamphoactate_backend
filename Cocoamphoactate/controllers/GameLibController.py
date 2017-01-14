@@ -20,10 +20,12 @@ class GameLibController:
             serializer = GameLibSerializer(libs, many=True)
             return Response(serializer.data)
         if request.method == 'POST':
-            serializer = GameLibSerializer(data=request.data)
+            data = request.data
+            data.update({"user": current_user.id})
+            serializer = GameLibSerializer(data=data)
             if serializer.is_valid():
                 user_game = GameLib.objects.filter(user=current_user.id, game=request.data['game'])
-                if len(user_game)>0:
+                if len(user_game) > 0:
                     return Response("Cannot add twice", status=status.HTTP_400_BAD_REQUEST)
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
@@ -33,14 +35,14 @@ class GameLibController:
     @api_view(['DELETE'])
     @authentication_classes((TokenAuthentication,))
     def get_put_delete_lib(request, pk):
-        lib = GameLibController.get_object(pk)
+        lib = GameLibController.get_object(pk, Utils.get_user_from_auth(request))
         if request.method == 'DELETE':
             lib.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
 
     @staticmethod
-    def get_object(pk):
+    def get_object(pk, user):
         try:
-            return GameLib.objects.get(pk=pk)
+            return GameLib.objects.get(pk=pk, user=user.id)
         except GameLib.DoesNotExist:
             raise Http404

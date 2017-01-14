@@ -515,6 +515,15 @@ games/{game_id}:
     responses:
       202:
 
+/gamelib/{game_id}
+  delete:
+    description: Deleting game from user's library
+    headers:
+      Authorization:
+        token <GENERATED_TOKEN>
+  responses:
+    202:
+
 
 /reviews/add
   post:
@@ -566,3 +575,58 @@ games/{game_id}:
           token <GENERATED_TOKEN>
   responses:
     200:
+
+/favs
+  get:
+    description: Listing games in favorites
+      headers:
+        Authorization:
+          token <GENERATED_TOKEN>
+    responses:
+      200:
+        body:
+          application/json:
+            example" |
+              [
+                {
+                  "id": 2,
+                  "user": 1,
+                  "game": 1
+                },
+                {
+                  "id": 7,
+                  "user": 1,
+                  "game": 3
+                }
+              ]
+  post:
+    descritpion: Adding game to favorites
+      headers:
+        Authorization:
+          token <GENERATED_TOKEN>
+      body:
+        application/json:
+          example: |
+            {
+              "game": 2
+            }
+    responses:
+      202:
+        body:
+          application/json:
+            example: |
+              {
+                "id": 1,
+                "user": 1,
+                "game": 2
+              }
+
+
+/favs/{game_id}
+  delete:
+    description: delete game from favorites
+    headers:
+      Authorization:
+        token <GENERATED_TOKEN>
+  responses:
+    202:

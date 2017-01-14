@@ -45,7 +45,9 @@ class FriendsPendingController:
     @authentication_classes((TokenAuthentication,))
     def invite_user(request):
         current_user = Utils.get_user_from_auth(request)
-        serializer = InvitesSerializer(data=request.data)
+        data = request.data
+        data.update({"user": current_user.id})
+        serializer = InvitesSerializer(data=data)
         if serializer.is_valid():
             init_data = int(serializer.initial_data["user_two"])
             flag = False
