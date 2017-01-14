@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.http import *
 from django.views.decorators.csrf import ensure_csrf_cookie
+from django.db.models import Q
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import api_view, authentication_classes
@@ -28,10 +29,14 @@ class FriendsController:
     @authentication_classes((TokenAuthentication,))
     def get_my_friends(request):
         current_user = Utils.get_user_from_auth(request)
-        friends = Friends.objects.filter(user_one=current_user.id)
+        friends = Friends.objects.filter(Q(user_one=current_user.id) | Q(user_two=current_user.id))
         users = []
         for friend in friends:
-            users.append(User.objects.get(id=friend.user_two_id))
+            if friend.user_two_id == current_user.id:
+                id = friend.user_one_id
+            else:
+                id = friend.user_two_id
+            users.append(User.objects.get(id=id))
         serializers = MyFriendsSerilizer(users, many=True)
         return Response(serializers.data, status=status.HTTP_200_OK)
 

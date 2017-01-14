@@ -96,6 +96,8 @@ class FriendsPendingController:
             invite = FriendsPendingController.get_object(pk=pk, current_id=current_user.id)
         except FriendsPending.DoesNotExist:
             return Response("Invitation does not exist", status=status.HTTP_404_NOT_FOUND)
+        except IndexError:
+            return Response("Invitation does not exist", status=status.HTTP_404_NOT_FOUND)
         friends = Friends(user_one_id=invite.user_one_id, user_two_id=invite.user_two_id)
         try:
             friends.save()
