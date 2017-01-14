@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.http import *
 from django.views.decorators.csrf import ensure_csrf_cookie
+from django.db.models import Q
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import api_view, authentication_classes
@@ -106,6 +107,6 @@ class FriendsPendingController:
     @staticmethod
     def get_object(pk, current_id):
         try:
-            return FriendsPending.objects.get(pk=pk, user_two_id=current_id)
+            return FriendsPending.objects.filter(Q(pk=pk) & (Q(user_one=current_id) | Q(user_two=current_id)))[0]
         except FriendsPending.DoesNotExist:
             raise Http404
