@@ -46,8 +46,17 @@ class GameController:
     def get_put_delete_game(request, pk):
         game = GameController.get_object(pk)
         if request.method == 'GET':
-            serializer = GameSerializer(game)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            lst = list(Score.objects.values('game_id').filter(game_id=game.id).annotate(Avg('score')))
+            if len(lst) > 0:
+                avr = lst[0]['score__avg']
+            else:
+                avr = 0
+            dat = {"id": game.id,
+                   "title": game.title,
+                   "description": game.description,
+                   "platform": game.platform,
+                   "score": avr}
+            return Response(dat, status=status.HTTP_200_OK)
         if request.method == 'DELETE':
             game.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
