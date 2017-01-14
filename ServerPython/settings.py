@@ -40,6 +40,15 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'Cocoamphoactate.apps.CocoamphoactateConfig',
+    'Favorites.apps.FavoritesConfig',
+    'Friends.apps.FriendsConfig',
+    'FriendsPending.apps.FriendspendingConfig',
+    'Search.apps.SearchConfig',
+    'Users.apps.UsersConfig',
+    'Reviews.apps.ReviewsConfig',
+    'Recommendation.apps.RecommendationConfig',
+    'Game.apps.GameConfig',
+    'GameLib.apps.GamelibConfig',
     'rest_framework.authtoken',
 ]
 
