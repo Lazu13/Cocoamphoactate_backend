@@ -3,6 +3,7 @@
 from django.contrib.auth.models import User
 from Friends.models import Friends
 from Game.models import Game, Score
+from GameLib.models import GameLib
 
 
 __all__ = ['Engine', 'ALL_USERS', 'FRIENDS_ONLY']
@@ -120,9 +121,9 @@ class Engine(object):
                 user_sims.update({user.id: sim})
 
         user_sims = sorted(user_sims.items(), key=operator.itemgetter(1), reverse=True) # dictionary containing user_ids and users' similarities
-
         games_f = Score.objects.values('game_id', 'score').filter(user_id=user_sims[0][0]).order_by('-score')[:8]
         games_s = Score.objects.values('game_id', 'score').filter(user_id=user_sims[1][0]).order_by('-score')[:8]
+        games_t = Score.objects.values('game_id', 'score').filter(user_id=user_sims[1][0]).order_by('-score')[:8]
 
         recommended_games = {}
         grd = {}
@@ -132,16 +133,19 @@ class Engine(object):
         games_s_dict = dict([(g['game_id'], g['score']) for g in games_s])
         recommended_games.update(dict(sorted(games_s_dict.items(), key=operator.itemgetter(1), reverse=True)))
 
+        games_t_dict = dict([(g['game_id'], g['score']) for g in games_t])
+        recommended_games.update(dict(sorted(games_t_dict.items(), key=operator.itemgetter(1), reverse=True)))
+
         for game in recommended_games:
             scores = list(Score.objects.values('game_id').filter(game_id=game).annotate(Avg('score')))
             idn = scores[0]['game_id']
             avg = scores[0]['score__avg']
             grd.update({idn: avg})
 
-        user_games = Score.objects.values('game_id').filter(user_id=self.user)
+        user_games = GameLib.objects.values('game').filter(user=self.user)
         for game in user_games:
-            if game['game_id'] in grd:
-                del grd[game['game_id']]
+            if game['game'] in grd:
+                del grd[game['game']]
 
         sorted_grd = sorted(grd.items(), key=operator.itemgetter(1), reverse=True)
         sorted_grd = sorted_grd[:3]
