@@ -58,6 +58,7 @@ class UserController:
                 'Invalid JSON - {0}'.format(error.detail),
                 status=status.HTTP_400_BAD_REQUEST
             )
+        data.update({'is_superuser': False})
         serializer = UserSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
@@ -93,7 +94,9 @@ class UserController:
             user.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         if request.method == 'PUT':
-            serializer = UserSerializer(user, data=request.data)
+            data = request.data
+            data.update({'is_superuser': False})
+            serializer = UserSerializer(user, data=data)
             if serializer.is_valid():
                 u = User.objects.get(pk=user.id)
                 u.username = serializer.initial_data["username"]

@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^users/(?P<pk>[0-9]+)$', UserController.get_user),
 
     url(r'^games$', GameController.get),
+    url(r'^games/add', GameController.post),
     url(r'^games/(?P<pk>[0-9]+)$', GameController.get_put_delete_game),
     url(r'^games/(?P<pk>[0-9]+)/grade$', GameController.add_grade),
 

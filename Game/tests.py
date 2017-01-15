@@ -10,14 +10,15 @@ from Game.models import Game, Score
 
 class GameRestTests(TestCase):
     def setUp(self):
-        User(id=1, username="restUser1", password="restPassword1").save()
+        User(id=1, username="restUser1", password="restPassword1", is_superuser=True).save()
         Token(user_id=1, created=datetime.now(), key="testToken1").save()
         self.client = Client()
 
     def test_should_add_new_game(self):
-        response = self.client.post("/games",
+        response = self.client.post("/games/add",
                                     {'title': 'testTitle', 'description': 'testDescription', 'platform': 'PC'},
                                     **{'HTTP_AUTHORIZATION': 'Token testToken1'})
+        print(response)
         games = Game.objects.all()
         self.assertEqual(len(games), 1)
 
@@ -53,13 +54,13 @@ class GameRestTests(TestCase):
 
     def test_should_not_add_existing_game(self):
         Game(title="testTitle", description="testDescrtiption", platform="PC").save()
-        response = self.client.post("/games",
+        response = self.client.post("/games/add",
                                     {'title': 'testTitle', 'description': 'testDescription', 'platform': 'PC'},
                                     **{'HTTP_AUTHORIZATION': 'Token testToken1'})
         self.assertEqual(response.status_code, 400)
 
     def test_should_not_add_with_invalid_format(self):
-        response = self.client.post("/games",
+        response = self.client.post("/games/add",
                                     {'notValid': 'testTitle', 'description': 'testDescription', 'platform': 'PC'},
                                     **{'HTTP_AUTHORIZATION': 'Token testToken1'})
         self.assertEqual(response.status_code, 400)

@@ -7,13 +7,15 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 from rest_framework.exceptions import ParseError
 from rest_framework.response import Response
 
+from django.contrib.auth.models import User
 from Game.models import Game, Score
 from Game.serializer import GameSerializer, ScoreSerializer
+from Cocoamphoactate.ControllerUtils import Utils
 
 
 class GameController:
     @ensure_csrf_cookie
-    @api_view(['GET', 'POST'])
+    @api_view(['GET'])
     @authentication_classes([])
     @permission_classes([])
     def get(request):
@@ -33,7 +35,15 @@ class GameController:
                        "score": avr}
                 data.append(dat)
             return Response(data, status=status.HTTP_200_OK)
+
+    @ensure_csrf_cookie
+    @api_view(['POST'])
+    @authentication_classes((TokenAuthentication,))
+    def post(request):
         if request.method == 'POST':
+            user = Utils.get_user_from_auth(request)
+            if not user.is_superuser:
+                return Response("Not a superuser", status=status.HTTP_403_FORBIDDEN)
             serializer = GameSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.save()
@@ -45,6 +55,7 @@ class GameController:
     @authentication_classes((TokenAuthentication,))
     def get_put_delete_game(request, pk):
         game = GameController.get_object(pk)
+        user = Utils.get_user_from_auth(request)
         if request.method == 'GET':
             lst = list(Score.objects.values('game_id').filter(game_id=game.id).annotate(Avg('score')))
             if len(lst) > 0:
@@ -58,9 +69,13 @@ class GameController:
                    "score": avr}
             return Response(dat, status=status.HTTP_200_OK)
         if request.method == 'DELETE':
+            if not user.is_superuser:
+                return Response("Not a superuser", status=status.HTTP_403_FORBIDDEN)
             game.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         if request.method == 'PUT':
+            if not user.is_superuser:
+                return Response("Not a superuser", status=status.HTTP_403_FORBIDDEN)
             serializer = GameSerializer(game, data=request.data)
             if serializer.is_valid():
                 g = Game.objects.get(pk=serializer.initial_data['id'])
