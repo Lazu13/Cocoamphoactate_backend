@@ -20,15 +20,15 @@ INSERT INTO authtoken_token VALUES('testToken6', '2017-01-10 19:06:14.049388', 6
 INSERT INTO authtoken_token VALUES('testToken7', '2017-01-10 19:06:14.049388', 7);
 
 DELETE FROM Game_game;
-INSERT INTO Game_game VALUES(1, 'The Wither 3: Wild Hunt', 'PC/PS4/XBO', 'Wither is a wandering monster slayer made by CDProject RED.');
-INSERT INTO Game_game VALUES(2, 'The Elder Scrolls V: Skyrim', 'PC', 'Fifth game of The Elder Scrolls series made by Bethesda.');
-INSERT INTO Game_game VALUES(3, 'Assassins Creed: Unity', 'PC', 'Fifth game of Assassins Creed Series made by Ubisoft.');
-INSERT INTO Game_game VALUES(4, 'Rise of the Tomb Raider', 'PC', 'Successor of Tomb Raider from 2013 made by Crystal Dynamics.');
-INSERT INTO Game_game VALUES(5, 'Gothic', 'PC', 'First game of the iconic game Series made by Piranha Bytes.');
-INSERT INTO Game_game VALUES(6, 'Gothic 2', 'PC', 'Second game of the iconic game Series made by Piranha Bytes.');
-INSERT INTO Game_game VALUES(7, 'Gothic 3', 'PC', 'Third game of the iconic game Series made by Piranha Bytes.');
-INSERT INTO Game_game VALUES(8, 'The Wither 2: Assassins of Kings', 'PC/PS3/XB360', 'Wither is a wandering monster slayer made by CDProject RED.');
-INSERT INTO Game_game VALUES(9, 'The Wither', 'PC/PS3/XB360', 'Wither is a wandering monster slayer made by CDProject RED.');
+INSERT INTO Game_game VALUES(1, 'The Wither 3: Wild Hunt', 'Wither is a wandering monster slayer made by CDProject RED.', 'PC/PS4/XBO');
+INSERT INTO Game_game VALUES(2, 'The Elder Scrolls V: Skyrim','Fifth game of The Elder Scrolls series made by Bethesda.' 'PC');
+INSERT INTO Game_game VALUES(3, 'Assassins Creed: Unity', 'Fifth game of Assassins Creed Series made by Ubisoft.', 'PC');
+INSERT INTO Game_game VALUES(4, 'Rise of the Tomb Raider', 'Successor of Tomb Raider from 2013 made by Crystal Dynamics.', 'PC');
+INSERT INTO Game_game VALUES(5, 'Gothic', 'First game of the iconic game Series made by Piranha Bytes.', 'PC');
+INSERT INTO Game_game VALUES(6, 'Gothic 2', 'Second game of the iconic game Series made by Piranha Bytes.', 'PC');
+INSERT INTO Game_game VALUES(7, 'Gothic 3', 'Third game of the iconic game Series made by Piranha Bytes.', 'PC');
+INSERT INTO Game_game VALUES(8, 'The Wither 2: Assassins of Kings', 'Wither is a wandering monster slayer made by CDProject RED.', 'PC/PS3/XB360');
+INSERT INTO Game_game VALUES(9, 'The Wither', 'Wither is a wandering monster slayer made by CDProject RED.', 'PC');
 
 DELETE FROM Favorites_favorites;
 INSERT INTO Favorites_favorites VALUES(1, 1, 5);
