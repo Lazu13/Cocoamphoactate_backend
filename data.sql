@@ -20,15 +20,15 @@ INSERT INTO authtoken_token VALUES('testToken6', '2017-01-10 19:06:14.049388', 6
 INSERT INTO authtoken_token VALUES('testToken7', '2017-01-10 19:06:14.049388', 7);
 
 DELETE FROM Game_game;
-INSERT INTO Game_game VALUES(1, 'The Wither 3: Wild Hunt', 'Wither is a wandering monster slayer made by CDProject RED.', 'PC/PS4/XBO');
-INSERT INTO Game_game VALUES(2, 'The Elder Scrolls V: Skyrim','Fifth game of The Elder Scrolls series made by Bethesda.', 'PC');
-INSERT INTO Game_game VALUES(3, 'Assassins Creed: Unity', 'Fifth game of Assassins Creed Series made by Ubisoft.', 'PC');
-INSERT INTO Game_game VALUES(4, 'Rise of the Tomb Raider', 'Successor of Tomb Raider from 2013 made by Crystal Dynamics.', 'PC');
-INSERT INTO Game_game VALUES(5, 'Gothic', 'First game of the iconic game Series made by Piranha Bytes.', 'PC');
-INSERT INTO Game_game VALUES(6, 'Gothic 2', 'Second game of the iconic game Series made by Piranha Bytes.', 'PC');
-INSERT INTO Game_game VALUES(7, 'Gothic 3', 'Third game of the iconic game Series made by Piranha Bytes.', 'PC');
-INSERT INTO Game_game VALUES(8, 'The Wither 2: Assassins of Kings', 'Wither is a wandering monster slayer made by CDProject RED.', 'PC/PS3/XB360');
-INSERT INTO Game_game VALUES(9, 'The Wither', 'Wither is a wandering monster slayer made by CDProject RED.', 'PC');
+INSERT INTO Game_game VALUES(1, 'The Witcher 3: Wild Hunt', 'Witcher is a wandering monster slayer made by CDProject RED.', 'PC/PS4/XBO', 'http://static.cdprojektred.com/thewitcher.com/media/wallpapers/witcher3/full/witcher3_pl_wallpaper_wiedzmin_3_dziki_gon_geralt_i_trofea_1920x1200_1449484775.png');
+INSERT INTO Game_game VALUES(2, 'The Elder Scrolls V: Skyrim','Fifth game of The Elder Scrolls series made by Bethesda.', 'PC', 'http://i.kinja-img.com/gawker-media/image/upload/s--dW839kt2--/18j16ohq721mqjpg.jpg');
+INSERT INTO Game_game VALUES(3, 'Assassins Creed: Unity', 'Fifth game of Assassins Creed Series made by Ubisoft.', 'PC', 'https://i.ytimg.com/vi/ND3SPZ3H8AI/maxresdefault.jpg');
+INSERT INTO Game_game VALUES(4, 'Rise of the Tomb Raider', 'Successor of Tomb Raider from 2013 made by Crystal Dynamics.', 'PC', 'http://img6.gram.pl/20151115185854.jpg');
+INSERT INTO Game_game VALUES(5, 'Gothic', 'First game of the iconic game Series made by Piranha Bytes.', 'PC', 'http://pawelcengiel.pl/wp-content/uploads/2016/04/gothic1-700x437.jpg');
+INSERT INTO Game_game VALUES(6, 'Gothic 2', 'Second game of the iconic game Series made by Piranha Bytes.', 'PC', 'http://gothic.hostil.pl/9.jpg');
+INSERT INTO Game_game VALUES(7, 'Gothic 3', 'Third game of the iconic game Series made by Piranha Bytes.', 'PC', 'http://gothic-game.kz/wallpapers/g3/001.jpg');
+INSERT INTO Game_game VALUES(8, 'The Witcher 2: Assassins of Kings', 'Witcher is a wandering monster slayer made by CDProject RED.', 'PC/PS3/XB360', 'http://nerdfarmblog.com/wp-content/uploads/2012/06/witcherlogo.jpg');
+INSERT INTO Game_game VALUES(9, 'The Witcher', 'Witcher is a wandering monster slayer made by CDProject RED.', 'PC', 'http://s.cdaction.pl/obrazki/171uz_wiedzmin_logo_2.jpg');
 
 DELETE FROM Favorites_favorites;
 INSERT INTO Favorites_favorites VALUES(1, 1, 5);

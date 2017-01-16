@@ -39,10 +39,3 @@ class FriendsController:
             users.append(User.objects.get(id=id))
         serializers = MyFriendsSerilizer(users, many=True)
         return Response(serializers.data, status=status.HTTP_200_OK)
-
-    @staticmethod
-    def get_object(pk):
-        try:
-            return Friends.objects.get(pk=pk)
-        except Friends.DoesNotExist:
-            raise Http404
