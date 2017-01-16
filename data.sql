@@ -1,0 +1,111 @@
+DELETE FROM auth_user;
+INSERT INTO auth_user(id, username, password, is_superuser, last_login, first_name, last_name, email, is_staff, is_active, date_joined) VALUES(1, 'testuser1', 'testpass1', 1, '2017-01-10 19:16:14.049388', 'test', 'test', 'user1@user.com', 1, 1, '2017-01-10 19:06:14.049388');
+INSERT INTO auth_user(id, username, password, is_superuser, last_login, first_name, last_name, email, is_staff, is_active, date_joined) VALUES(2, 'testuser2', 'testpass2', 0, '2017-01-10 19:16:14.049388', 'test', 'test', 'user2@user.com', 0, 1, '2017-01-10 19:06:14.049388');
+INSERT INTO auth_user(id, username, password, is_superuser, last_login, first_name, last_name, email, is_staff, is_active, date_joined) VALUES(3, 'testuser3', 'testpass3', 0, '2017-01-10 19:16:14.049388', 'test', 'test', 'user3@user.com', 0, 1, '2017-01-10 19:06:14.049388');
+INSERT INTO auth_user(id, username, password, is_superuser, last_login, first_name, last_name, email, is_staff, is_active, date_joined) VALUES(4, 'testuser4', 'testpass4', 0, '2017-01-10 19:16:14.049388', 'test', 'test', 'user4@user.com', 0, 1, '2017-01-10 19:06:14.049388');
+INSERT INTO auth_user(id, username, password, is_superuser, last_login, first_name, last_name, email, is_staff, is_active, date_joined) VALUES(5, 'testuser5', 'testpass5', 0, '2017-01-10 19:16:14.049388', 'test', 'test', 'user5@user.com', 0, 1, '2017-01-10 19:06:14.049388');
+INSERT INTO auth_user(id, username, password, is_superuser, last_login, first_name, last_name, email, is_staff, is_active, date_joined) VALUES(6, 'testuser6', 'testpass6', 0, '2017-01-10 19:16:14.049388', 'test', 'test', 'user6@user.com', 0, 1, '2017-01-10 19:06:14.049388');
+INSERT INTO auth_user(id, username, password, is_superuser, last_login, first_name, last_name, email, is_staff, is_active, date_joined) VALUES(7, 'testuser7', 'testpass7', 0, '2017-01-10 19:16:14.049388', 'test', 'test', 'user7@user.com', 0, 1, '2017-01-10 19:06:14.049388');
+
+;
+
+
+DELETE FROM authtoken_token;
+INSERT INTO authtoken_token VALUES('testToken1', '2017-01-10 19:06:14.049388', 1);
+INSERT INTO authtoken_token VALUES('testToken2', '2017-01-10 19:06:14.049388', 2);
+INSERT INTO authtoken_token VALUES('testToken3', '2017-01-10 19:06:14.049388', 3);
+INSERT INTO authtoken_token VALUES('testToken4', '2017-01-10 19:06:14.049388', 4);
+INSERT INTO authtoken_token VALUES('testToken5', '2017-01-10 19:06:14.049388', 5);
+INSERT INTO authtoken_token VALUES('testToken6', '2017-01-10 19:06:14.049388', 6);
+INSERT INTO authtoken_token VALUES('testToken7', '2017-01-10 19:06:14.049388', 7);
+
+DELETE FROM Game_game;
+INSERT INTO Game_game VALUES(1, 'The Wither 3: Wild Hunt', 'Wither is a wandering monster slayer made by CDProject RED.', 'PC/PS4/XBO');
+INSERT INTO Game_game VALUES(2, 'The Elder Scrolls V: Skyrim','Fifth game of The Elder Scrolls series made by Bethesda.', 'PC');
+INSERT INTO Game_game VALUES(3, 'Assassins Creed: Unity', 'Fifth game of Assassins Creed Series made by Ubisoft.', 'PC');
+INSERT INTO Game_game VALUES(4, 'Rise of the Tomb Raider', 'Successor of Tomb Raider from 2013 made by Crystal Dynamics.', 'PC');
+INSERT INTO Game_game VALUES(5, 'Gothic', 'First game of the iconic game Series made by Piranha Bytes.', 'PC');
+INSERT INTO Game_game VALUES(6, 'Gothic 2', 'Second game of the iconic game Series made by Piranha Bytes.', 'PC');
+INSERT INTO Game_game VALUES(7, 'Gothic 3', 'Third game of the iconic game Series made by Piranha Bytes.', 'PC');
+INSERT INTO Game_game VALUES(8, 'The Wither 2: Assassins of Kings', 'Wither is a wandering monster slayer made by CDProject RED.', 'PC/PS3/XB360');
+INSERT INTO Game_game VALUES(9, 'The Wither', 'Wither is a wandering monster slayer made by CDProject RED.', 'PC');
+
+DELETE FROM Favorites_favorites;
+INSERT INTO Favorites_favorites VALUES(1, 1, 5);
+INSERT INTO Favorites_favorites VALUES(2, 1, 1);
+INSERT INTO Favorites_favorites VALUES(3, 2, 2);
+INSERT INTO Favorites_favorites VALUES(4, 2, 3);
+INSERT INTO Favorites_favorites VALUES(5, 3, 5);
+INSERT INTO Favorites_favorites VALUES(6, 3, 4);
+INSERT INTO Favorites_favorites VALUES(7, 3, 1);
+INSERT INTO Favorites_favorites VALUES(8, 4, 5);
+INSERT INTO Favorites_favorites VALUES(9, 5, 2);
+INSERT INTO Favorites_favorites VALUES(10, 5, 4);
+INSERT INTO Favorites_favorites VALUES(11, 5, 5);
+INSERT INTO Favorites_favorites VALUES(12, 6, 1);
+INSERT INTO Favorites_favorites VALUES(13, 6, 2);
+INSERT INTO Favorites_favorites VALUES(14, 7, 1);
+INSERT INTO Favorites_favorites VALUES(15, 7, 5);
+
+DELETE FROM Friends_friends;
+INSERT INTO Friends_friends VALUES(1, 1, 2);
+INSERT INTO Friends_friends VALUES(2, 1, 3);
+INSERT INTO Friends_friends VALUES(3, 1, 4);
+INSERT INTO Friends_friends VALUES(7, 6, 7);
+INSERT INTO Friends_friends VALUES(8, 4, 6);
+INSERT INTO Friends_friends VALUES(9, 5, 3);
+INSERT INTO Friends_friends VALUES(10, 5, 7);
+
+DELETE FROM FriendsPending_friendspending;
+INSERT INTO FriendsPending_friendspending VALUES(4, 2, 4);
+INSERT INTO FriendsPending_friendspending VALUES(5, 2, 5);
+INSERT INTO FriendsPending_friendspending VALUES(6, 3, 6);
+
+DELETE FROM GameLib_gamelib;
+INSERT INTO GameLib_gamelib(id, game_id, user_id) VALUES(1, 1, 1);
+INSERT INTO GameLib_gamelib(id, game_id, user_id) VALUES(2, 1, 5);
+INSERT INTO GameLib_gamelib(id, game_id, user_id) VALUES(3, 2, 1);
+INSERT INTO GameLib_gamelib(id, game_id, user_id) VALUES(4, 2, 3);
+INSERT INTO GameLib_gamelib(id, game_id, user_id) VALUES(5, 2, 4);
+INSERT INTO GameLib_gamelib(id, game_id, user_id) VALUES(6, 3, 2);
+INSERT INTO GameLib_gamelib(id, game_id, user_id) VALUES(7, 4, 1);
+INSERT INTO GameLib_gamelib(id, game_id, user_id) VALUES(8, 4, 2);
+INSERT INTO GameLib_gamelib(id, game_id, user_id) VALUES(9, 5, 5);
+INSERT INTO GameLib_gamelib(id, game_id, user_id) VALUES(10, 6, 4);
+INSERT INTO GameLib_gamelib(id, game_id, user_id) VALUES(11, 6, 3);
+INSERT INTO GameLib_gamelib(id, game_id, user_id) VALUES(12, 7, 2);
+
+DELETE FROM Reviews_reviews;
+INSERT INTO Reviews_reviews(id, game_id, user_id, review) VALUES(1, 1, 1, "great game");
+INSERT INTO Reviews_reviews(id, game_id, user_id, review) VALUES(2, 1, 3, "awesome game");
+INSERT INTO Reviews_reviews(id, game_id, user_id, review) VALUES(3, 1, 4, "best game I've played");
+INSERT INTO Reviews_reviews(id, game_id, user_id, review) VALUES(4, 2, 2, "preety good game");
+INSERT INTO Reviews_reviews(id, game_id, user_id, review) VALUES(5, 2, 6, "average game");
+INSERT INTO Reviews_reviews(id, game_id, user_id, review) VALUES(6, 3, 4, "could be better");
+INSERT INTO Reviews_reviews(id, game_id, user_id, review) VALUES(7, 4, 3, "test game");
+INSERT INTO Reviews_reviews(id, game_id, user_id, review) VALUES(8, 4, 5, "test game");
+INSERT INTO Reviews_reviews(id, game_id, user_id, review) VALUES(9, 5, 2, "test game");
+INSERT INTO Reviews_reviews(id, game_id, user_id, review) VALUES(10, 5, 1, "awesome game");
+INSERT INTO Reviews_reviews(id, game_id, user_id, review) VALUES(11, 5, 7, "best game");
+
+DELETE FROM Game_score;
+INSERT INTO Game_score(id, game_id_id, user_id_id, score) VALUES(1, 1, 1, 5);
+INSERT INTO Game_score(id, game_id_id, user_id_id, score) VALUES(2, 1, 3, 5);
+INSERT INTO Game_score(id, game_id_id, user_id_id, score) VALUES(3, 1, 4, 5);
+INSERT INTO Game_score(id, game_id_id, user_id_id, score) VALUES(4, 2, 2, 4);
+INSERT INTO Game_score(id, game_id_id, user_id_id, score) VALUES(5, 2, 6, 3);
+INSERT INTO Game_score(id, game_id_id, user_id_id, score) VALUES(6, 3, 4, 4);
+INSERT INTO Game_score(id, game_id_id, user_id_id, score) VALUES(7, 4, 3, 5);
+INSERT INTO Game_score(id, game_id_id, user_id_id, score) VALUES(8, 4, 5, 4);
+INSERT INTO Game_score(id, game_id_id, user_id_id, score) VALUES(9, 5, 2, 4);
+INSERT INTO Game_score(id, game_id_id, user_id_id, score) VALUES(10, 5, 1, 4);
+INSERT INTO Game_score(id, game_id_id, user_id_id, score) VALUES(11, 5, 4, 5);
+INSERT INTO Game_score(id, game_id_id, user_id_id, score) VALUES(12, 5, 6, 5);
+INSERT INTO Game_score(id, game_id_id, user_id_id, score) VALUES(13, 1, 7, 5);
+INSERT INTO Game_score(id, game_id_id, user_id_id, score) VALUES(14, 5, 7, 5);
+INSERT INTO Game_score(id, game_id_id, user_id_id, score) VALUES(15, 6, 7, 4);
+INSERT INTO Game_score(id, game_id_id, user_id_id, score) VALUES(16, 8, 3, 5);
+INSERT INTO Game_score(id, game_id_id, user_id_id, score) VALUES(17, 8, 4, 4);
+INSERT INTO Game_score(id, game_id_id, user_id_id, score) VALUES(18, 9, 6, 4);
+INSERT INTO Game_score(id, game_id_id, user_id_id, score) VALUES(19, 9, 7, 4);
+INSERT INTO Game_score(id, game_id_id, user_id_id, score) VALUES(20, 7, 2, 3);

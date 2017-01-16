@@ -1,4 +1,24 @@
 language: python
 
+python:
+ - "3.5"
+
+install:
+ - pip install -r requirements.txt
+ - pip install coverage
+ - pip install coveralls
+
 script:
-   - python -m unittest discover test
+ - coverage run -p --source='.' manage.py test Users.tests
+ - coverage run -p --source='.' manage.py test Favorites.tests
+ - coverage run -p --source='.' manage.py test Friends.tests
+ - coverage run -p --source='.' manage.py test FriendsPending.tests
+ - coverage run -p --source='.' manage.py test Game.tests
+ - coverage run -p --source='.' manage.py test GameLib.tests
+ - coverage run -p --source='.' manage.py test Recommendation.tests
+ - coverage run -p --source='.' manage.py test Reviews.tests
+ - coverage run -p --source='.' manage.py test Search.tests
+ - coverage combine
+
+after_success:
+ - coveralls

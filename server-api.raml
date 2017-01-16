@@ -1,0 +1,634 @@
+#%RAML 1.0
+title: "Server-Api"
+baseUri: http://127.0.0.1:8000/
+version: v1
+/api-token-auth:
+  post:
+    description: Get token - used only for testing purposes
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "token" : <GENERATED_TOKEN>
+              }
+/users:
+  get:
+    description: Retrieve list of all users
+    headers:
+      Authorization:
+        token <GENERATED_TOKEN>
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              [
+                {
+                  "id": 4,
+                  "login": "testLogin3",
+                  "password": "testPassword3",
+                  "email": "testMail3"
+                }
+              ]
+
+/users/{userId}:
+    get:
+    description: Retrieve user with given id
+    headers:
+      Authorization:
+        Token <GENERATED_TOKEN>
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                  "id": 2,
+                  "username": "CtestUSerKtestUSer3testUSerXtestUSerW",
+                  "password": "2testPass4testPassAtestPassNtestPassR",
+                  "email": ""
+              }
+
+/users/login:
+  post:
+    description: Endpoint for logining - as response token is returned
+    body:
+      application/json:
+        example: |
+          {
+            "username" : "testUserName",
+            "password" : "testPassword"
+          }
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "token" : <GENERATED_TOKEN>
+              }
+
+/users/register:
+  post:
+    description: Registering new user
+    body:
+      application/json:
+        example: |
+          {
+            "id" : 1,
+            "username" : "testUSername",
+            "password" : "testPassword",
+            "email" : "testEmail"
+          }
+    responses:
+      200:
+
+/users/games/search:
+    post:
+      description: Searching by game title
+      body:
+         application/json:
+         example : |
+            {
+              "substring" : "test"
+            }
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                [
+                  {
+                    "id" : 1,
+                    "title" : "test",
+                    "description" : "test",
+                    "platform" : "PC"
+                  },
+                  {
+                    "id" : 2,
+                    "title" : "test2",
+                    "description" : "test2",
+                    "platform" : "PC"
+                  }
+                ]
+
+/users/users/search:
+    post:
+        description: Searching by username
+        body:
+            application/json:
+             example : |
+                {
+                    "substring" : "test"
+                }
+    responses:
+        200:
+          body:
+            application/json:
+              example: |
+                [
+                  {
+                    "id": 1,
+                    "username": "testuser1",
+                    "password": "testpass1",
+                    "email": "user1@user.com"
+                  },
+                  {
+                    "id": 2,
+                    "username": "testuser2",
+                    "password": "testpass2",
+                    "email": "user2@user.com"
+                  }
+                ]
+
+/user:
+  get:
+    description: Retrieves given user by token authentication
+    headers:
+      Authorization:
+        token <GENERATED_TOKEN>
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "id" : 1
+                "username" : "testUSername",
+                "password" : "testPassword",
+                "email" : "testEmail"
+              }
+  put:
+    description: Edits user by its token
+    headers:
+      Authorization:
+        token <GENERATED_TOKEN>
+    responses:
+      200:
+        body:
+          application/json:
+            example:|
+              {
+                "id" : 1
+                "username" : "testUSername",
+                "password" : "testPassword",
+                "email" : "testEmail"
+              }
+  delete:
+    description: Removed user by its token. Can be used to remove our account
+    headers:
+      Authorization:
+        token <GENERATED_TOKEN>
+    responses:
+      204:
+
+/dataloader:
+  get:
+    description: Loades test data(it's not consistent)
+    responses:
+      200:
+
+/games:
+  get:
+    description: Retrieves list of games
+    headers:
+      Authorization:
+        token <GENERATED_TOKEN>
+    responses:
+      200:
+        body:
+          application/json:
+            example:|
+              [
+                {
+                  "id" : 1,
+                  "title" : "test",
+                  "description" : "test",
+                  "platform" : "PC",
+                  "score" : 4.25
+                },
+                {
+                  "id" : 2,
+                  "title" : "test2",
+                  "description" : "test2",
+                  "platform" : "PC",
+                  "score" : 2
+                }
+              ]
+
+/games/add:
+  post:
+    description: Adds new game to database
+    headers:
+      Authorization:
+        token <GENERATED_TOKEN>
+    body:
+      application/json:
+        example: |
+          {
+            "title" : "test",
+            "description" : "test",
+            "platform" : "PC"
+          }
+    responses:
+      200:
+        body:
+          application/json:
+              example: |
+                {
+                  "title" : "test",
+                  "description" : "test",
+                  "platform" : "PC"
+                }
+
+games/{game_id}:
+  get:
+    description: Retrieves game by given game_id
+    headers:
+      Authorization:
+        token <GENERATED_TOKEN>
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "id" : 1,
+                "title" : "test",
+                "description" : "test",
+                "platform" : "PC"
+              }
+  put:
+    description: Edits game by given game_id
+    headers:
+      Authorization:
+        token <GENERATED_TOKEN>
+    body:
+      application/json:
+        example: |
+          {
+            "title" : "test",
+            "description" : "test",
+            "platform" : "PC"
+          }
+    responses:
+      202:
+        body:
+          application/json:
+              example: |
+                {
+                  "title" : "test",
+                  "description" : "test",
+                  "platform" : "PC"
+                }
+
+  delete:
+    description: Removes game
+    headers:
+      Authorization:
+        token <GENERATED_TOKEN>
+    responses:
+      204:
+
+/games/{game_id}/grade:
+  post:
+    description: Add new score for given game
+    headers:
+      Authorization:
+        token <GENERATED_TOKEN>
+    body:
+      application/json:
+        example: |
+          {
+            "game_id" : 1,
+            "user_id" : 2,
+            "score" : 4.5
+          }
+    responses:
+      200:
+
+/friends:
+  get:
+    description: Retrieves list of friendship connections
+    headers:
+      Authorization:
+        token <GENERATED_TOKEN>
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              [
+                {
+                  "id" : 1,
+                  "user_one" : 3,
+                  "user_two" : 4
+                },
+                {
+                  "id" : 2,
+                  "user_one" : 3,
+                  "user_two" : 2
+                },
+              ]
+/friends/my:
+  get:
+    description: Retrieves list of my friends
+    headers:
+      Authorization:
+        token <GENERATED_TOKEN>
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+                [
+                  {
+                    "id": 2,
+                    "username": "CtestUSerKtestUSer3testUSerXtestUSerW"
+                  },
+                  {
+                    "id": 3,
+                    "username": "EtestUSer6testUSerCtestUSer5testUSerC"
+                  }
+                ]
+/friends/pending:
+  get:
+    description: Get list of all pending invitations
+    headers:
+      Authorization:
+        token <GENERATED_TOKEN>
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              [
+                {
+                  "id" : 1,
+                  "user_one" : 3,
+                  "user_two" : 4
+                },
+                {
+                  "id" : 2,
+                  "user_one" : 3,
+                  "user_two" : 2
+                },
+              ]
+/friends/pending/add:
+  post:
+    description: Send invitation to given user
+    headers:
+      Authorization:
+        token <GENERATED_TOKEN>
+    body:
+      application/json:
+        example: |
+          {
+            "user_two" : 2
+          }
+    responses:
+      202:
+
+/friends/pending/sent:
+  get:
+    description: List all invitations sent by me
+    headers:
+      Authorization:
+        token <GENERATED_TOKEN>
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              [
+                {
+                  "id" : 1
+                  "user_one" : 1
+                  "user_two" : 2
+                },
+                {
+                  "id" : 2
+                  "user_one" : 1
+                  "user_two" : 4
+                },
+              ]
+
+/friends/pending/received:
+  get:
+    description: List all invitation received by me
+    headers:
+      Authorization:
+        token <GENERATED_TOKEN>
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              [
+                {
+                  "id" : 1
+                  "user_one" : 1
+                  "user_two" : 2
+                },
+                {
+                  "id" : 2
+                  "user_one" : 1
+                  "user_two" : 4
+                },
+              ]
+
+/friends/pending/accept/{inivite_id}:
+  get:
+    description: Accepting received invite
+    headers:
+      Authorization:
+        token <GENERATED_TOKEN>
+    responses:
+      200:
+
+/users/recommend/type/{type_id}:
+  get:
+    description: Listing game recommendations
+    headers:
+      Authorization:
+        token <GENERATED_TOKEN>
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "1" : 5
+                "2" : 4.75
+                "3" : 4
+              }
+
+/users/recommend/mostPopular:
+  get:
+    description: Listing most popular games
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "1": 5,
+                "4": 4.5,
+                "5": 4.333333333333333
+              }
+
+/gamelib:
+  get:
+    description: Listing game library
+      headers:
+        Authorization:
+          token <GENERATED_TOKEN>
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              [
+                {
+                  "id" : 1,
+                  "user" : 2,
+                  "game" : 1
+                },
+                {
+                  "id" : 2,
+                  "user" : 3,
+                  "game" : 1
+                }
+              ]
+  post:
+    description: Adds new game to our game library
+    headers:
+      Authorization:
+        token <GENERATED_TOKEN>
+    body:
+      application/json:
+        example: |
+          {
+            "user" : 1,
+            "game" : 2
+          }
+    responses:
+      202:
+
+/gamelib/{game_id}
+  delete:
+    description: Deleting game from user's library
+    headers:
+      Authorization:
+        token <GENERATED_TOKEN>
+  responses:
+    202:
+
+
+/reviews/add
+  post:
+    description: Adding game review
+      headers:
+        Authorization:
+          token <GENERATED_TOKEN>
+      body:
+        application/json:
+          example: |
+            {
+              "game": 1,
+              "review": "sample review"
+            }
+  responses:
+    202:
+      body:
+        application/json:
+          "Review saved successfully"
+
+
+/reviews/{game_id}
+  get:
+    description: Listing game reviews
+  responses:
+    200:
+      body:
+        application/json:
+          example: |
+            [
+              {
+                "game": 1,
+                "user": 1,
+                "review": "great game"
+              },
+              {
+                "game": 1,
+                "user": 2,
+                "review": "sample review"
+              }
+            ]
+
+
+/reviews/remove/{game_id}
+  delete:
+    description: Deleting game review
+      headers:
+        Authorization:
+          token <GENERATED_TOKEN>
+  responses:
+    200:
+
+/favs
+  get:
+    description: Listing games in favorites
+      headers:
+        Authorization:
+          token <GENERATED_TOKEN>
+    responses:
+      200:
+        body:
+          application/json:
+            example" |
+              [
+                {
+                  "id": 2,
+                  "user": 1,
+                  "game": 1
+                },
+                {
+                  "id": 7,
+                  "user": 1,
+                  "game": 3
+                }
+              ]
+  post:
+    descritpion: Adding game to favorites
+      headers:
+        Authorization:
+          token <GENERATED_TOKEN>
+      body:
+        application/json:
+          example: |
+            {
+              "game": 2
+            }
+    responses:
+      202:
+        body:
+          application/json:
+            example: |
+              {
+                "id": 1,
+                "user": 1,
+                "game": 2
+              }
+
+
+/favs/{game_id}
+  delete:
+    description: delete game from favorites
+    headers:
+      Authorization:
+        token <GENERATED_TOKEN>
+  responses:
+    202:
