@@ -16,8 +16,8 @@ class GameRestTests(TestCase):
 
     def test_should_add_new_game(self):
         response = self.client.post("/games/add",
-                                    {'title': 'testTitle', 'description': 'testDescription', 'platform': 'PC'},
-                                    **{'HTTP_AUTHORIZATION': 'Token testToken1'})
+                                    {'title': 'testTitle', 'description': 'testDescription', 'platform': 'PC',
+                                     'url': 'testurl'}, **{'HTTP_AUTHORIZATION': 'Token testToken1'})
         print(response)
         games = Game.objects.all()
         self.assertEqual(len(games), 1)
@@ -35,7 +35,8 @@ class GameRestTests(TestCase):
     def test_should_edit_game(self):
         Game(title="testTitle", description="testDescrtiption", platform="PC").save()
         response = self.client.put("/games/1",
-                                   '{"id":1,"title": "testTitleNew", "description": "testDescriptionNew", "platform": "PC"}',
+                                   '{"id":1,"title": "testTitleNew", "description": "testDescriptionNew", '
+                                   '"platform": "PC", "url": "testurl"}',
                                    **{'HTTP_AUTHORIZATION': 'Token testToken1', 'content_type': 'application/json'})
         response = self.client.get("/games/1", **{'HTTP_AUTHORIZATION': 'Token testToken1'})
         self.assertEqual(response.json()['title'], "testTitleNew")
@@ -55,27 +56,29 @@ class GameRestTests(TestCase):
     def test_should_not_add_existing_game(self):
         Game(title="testTitle", description="testDescrtiption", platform="PC").save()
         response = self.client.post("/games/add",
-                                    {'title': 'testTitle', 'description': 'testDescription', 'platform': 'PC'},
-                                    **{'HTTP_AUTHORIZATION': 'Token testToken1'})
+                                    {'title': 'testTitle', 'description': 'testDescription', 'platform': 'PC',
+                                     'url': 'testurl'}, **{'HTTP_AUTHORIZATION': 'Token testToken1'})
         self.assertEqual(response.status_code, 400)
 
     def test_should_not_add_with_invalid_format(self):
         response = self.client.post("/games/add",
-                                    {'notValid': 'testTitle', 'description': 'testDescription', 'platform': 'PC'},
-                                    **{'HTTP_AUTHORIZATION': 'Token testToken1'})
+                                    {'notValid': 'testTitle', 'description': 'testDescription', 'platform': 'PC',
+                                     'url': 'testurl'}, **{'HTTP_AUTHORIZATION': 'Token testToken1'})
         self.assertEqual(response.status_code, 400)
 
     def test_should_not_edit_to_existing_game(self):
         Game(title="testTitle1", description="testDescrtiption", platform="PC").save()
         Game(title="testTitle2", description="testDescrtiption", platform="PC").save()
         response = self.client.put("/games/1",
-                                   '{"id":1,"title": "testTitle2", "description": "testDescriptionNew", "platform": "PC"}',
+                                   '{"id":1,"title": "testTitle2", "description": "testDescriptionNew", '
+                                   '"platform": "PC", "url": "testurl"}',
                                    **{'HTTP_AUTHORIZATION': 'Token testToken1', 'content_type': 'application/json'})
         self.assertEqual(response.status_code, 400)
 
     def test_should_not_edit_not_existing_game(self):
         response = self.client.put("/games/1",
-                                   '{"id":10000,"title": "testTitleNew", "description": "testDescriptionNew", "platform": "PC"}',
+                                   '{"id":10000,"title": "testTitleNew", "description": "testDescriptionNew", '
+                                   '"platform": "PC", "url": "testurl"}',
                                    **{'HTTP_AUTHORIZATION': 'Token testToken1', 'content_type': 'application/json'})
         self.assertEqual(response.status_code, 404)
 
