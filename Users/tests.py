@@ -95,5 +95,9 @@ class UserRestTests(TestCase):
         response = self.client.get("/user", **{'HTTP_AUTHORIZATION': 'Token athsrthsrthsth'})
         self.assertEqual(response.status_code, 401)
 
+    def test_should_respond(self):
+        response = self.client.get("/users/1", **{'HTTP_AUTHORIZATION': 'Token testToken'})
+        self.assertEqual(response.status_code, 200)
+
 
 

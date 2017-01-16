@@ -150,5 +150,5 @@ class EngineTestCase(TestCase):
         self.engine.set_user(self.user.id)
         
         res = self.engine.get_best_matching()
-        self.assertEqual(list(res.keys()), [8, 6, 7])
+        self.assertEqual(list(res.keys()), [8, 3, 7])
 

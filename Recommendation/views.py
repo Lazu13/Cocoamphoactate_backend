@@ -27,7 +27,8 @@ class RecommendationController():
                        "title": game.title,
                        "description": game.description,
                        "platform": game.platform,
-                       "score": games[g]}
+                       "score": games[g],
+                       "url": game.url}
                 data.append(dat)
         except ValueError as e:
             return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
@@ -50,6 +51,7 @@ class RecommendationController():
                    "title": game.title,
                    "description": game.description,
                    "platform": game.platform,
-                   "score": games[g]}
+                   "score": games[g],
+                   "url": game.url}
             data.append(dat)
         return Response(data, status=status.HTTP_200_OK)

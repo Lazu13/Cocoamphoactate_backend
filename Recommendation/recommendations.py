@@ -121,20 +121,16 @@ class Engine(object):
                 user_sims.update({user.id: sim})
 
         user_sims = sorted(user_sims.items(), key=operator.itemgetter(1), reverse=True) # dictionary containing user_ids and users' similarities
-        games_f = Score.objects.values('game_id', 'score').filter(user_id=user_sims[0][0]).order_by('-score')[:8]
-        games_s = Score.objects.values('game_id', 'score').filter(user_id=user_sims[1][0]).order_by('-score')[:8]
-        games_t = Score.objects.values('game_id', 'score').filter(user_id=user_sims[1][0]).order_by('-score')[:8]
-
         recommended_games = {}
         grd = {}
-        games_f_dict = dict([(g['game_id'], g['score']) for g in games_f])
-        recommended_games.update(dict(sorted(games_f_dict.items(), key=operator.itemgetter(1), reverse=True)))
-
-        games_s_dict = dict([(g['game_id'], g['score']) for g in games_s])
-        recommended_games.update(dict(sorted(games_s_dict.items(), key=operator.itemgetter(1), reverse=True)))
-
-        games_t_dict = dict([(g['game_id'], g['score']) for g in games_t])
-        recommended_games.update(dict(sorted(games_t_dict.items(), key=operator.itemgetter(1), reverse=True)))
+        for d in user_sims:
+            if d[0] == self.user:
+                continue
+            games = Score.objects.values('game_id', 'score').filter(user_id=d[0]).order_by('-score')
+            games_f_dict = dict([(g['game_id'], g['score']) for g in games])
+            recommended_games.update(dict(sorted(games_f_dict.items(), key=operator.itemgetter(1), reverse=True)))
+            if len(recommended_games) >= 8:
+                break
 
         for game in recommended_games:
             scores = list(Score.objects.values('game_id').filter(game_id=game).annotate(Avg('score')))
