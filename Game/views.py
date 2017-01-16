@@ -32,7 +32,8 @@ class GameController:
                        "title": game.title,
                        "description": game.description,
                        "platform": game.platform,
-                       "score": avr}
+                       "score": avr,
+                       "url": game.url}
                 data.append(dat)
             return Response(data, status=status.HTTP_200_OK)
 
@@ -66,7 +67,8 @@ class GameController:
                    "title": game.title,
                    "description": game.description,
                    "platform": game.platform,
-                   "score": avr}
+                   "score": avr,
+                   "url": game.url}
             return Response(dat, status=status.HTTP_200_OK)
         if request.method == 'DELETE':
             if not user.is_superuser:
